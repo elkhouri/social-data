@@ -5,11 +5,9 @@
 
 var express = require('express'),
   http = require('http'),
-  path = require('path'),
-    bodyParser = require('body-parser');
+  path = require('path');
 
 var app = express();
-
 
 /**
  * Configuration
@@ -17,9 +15,6 @@ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'app')));
 
 

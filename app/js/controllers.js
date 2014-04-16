@@ -20,6 +20,15 @@
       });
     };
 
+    $scope.twitterLogin = function () {
+      OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto');
+      OAuth.popup('twitter', function (error, result) {
+        //handle error with error
+        //use result.access_token in your API request
+        alert("popup");
+      });
+    };
+
     $scope.logout = function () {
       ezfb.logout();
     };
@@ -41,19 +50,12 @@
 
     function initData() {
       ezfb.api('/me/friends').then(function (res) {
-        console.log(res);
+        $scope.numFriends = res.data.length;
+        res.data.forEach(function (f) {
+
+        });
       });
     }
-
-  });
-
-  app.controller('MyCtrl1', function ($scope) {
-    // write Ctrl here
-
-  });
-
-  app.controller('MyCtrl2', function ($scope) {
-    // write Ctrl here
 
   });
 

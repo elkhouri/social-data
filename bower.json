@@ -10,6 +10,7 @@
     "angular-route": "latest",
     "angular-bootstrap": "latest",
     "bootstrap": "latest",
-    "angular-easyfb": "latest"
+    "angular-easyfb": "latest",
+    "oauth.io": "latest"
   }
 }

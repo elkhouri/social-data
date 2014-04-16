@@ -6,22 +6,17 @@
   app.controller('MainCtrl', function ($scope, $http, ezfb, $q) {
 
     updateMe();
-    $scope.loggedIn = function(){
-      return $scope.loginStatus && $scope.loginStatus.status == 'connected';
-    };
-    updateLoginStatus()
-      .then(updateApiCall);
 
     ezfb.Event.subscribe('auth.statusChange', function (statusRes) {
       $scope.loginStatus = statusRes;
 
       updateMe();
-      updateApiCall();
+      initData();
     });
 
     $scope.login = function () {
       ezfb.login(null, {
-        scope: 'email,user_likes'
+        scope: 'email,user_likes,user_friends'
       });
     };
 
@@ -29,16 +24,14 @@
       ezfb.logout();
     };
 
-    var autoToJSON = ['loginStatus', 'apiRes'];
-    angular.forEach(autoToJSON, function (varName) {
-      $scope.$watch(varName, function (val) {
-        $scope[varName + 'JSON'] = JSON.stringify(val, null, 2);
-      }, true);
-    });
+    $scope.loggedIn = function () {
+      return $scope.loginStatus && $scope.loginStatus.status == 'connected';
+    };
 
     function updateMe() {
       ezfb.getLoginStatus()
-        .then(function () {
+        .then(function (res) {
+          $scope.loginStatus = res;
           return ezfb.api('/me');
         })
         .then(function (me) {
@@ -46,24 +39,11 @@
         });
     }
 
-    function updateLoginStatus() {
-      return ezfb.getLoginStatus()
-        .then(function (res) {
-          $scope.loginStatus = res;
-        });
+    function initData() {
+      ezfb.api('/me/friends').then(function (res) {
+        console.log(res);
+      });
     }
-
-    function updateApiCall() {
-      return $q.all([
-        ezfb.api('/me'),
-        ezfb.api('/me/likes')
-      ])
-        .then(function (resList) {
-          $scope.apiRes = resList;
-        });
-
-    }
-
 
   });
 

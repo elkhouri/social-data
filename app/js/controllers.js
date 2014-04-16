@@ -3,10 +3,12 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, ezfb) {
+  app.controller('MainCtrl', function ($scope, $http, ezfb, $q) {
 
     updateMe();
-
+    $scope.loggedIn = function(){
+      return $scope.loginStatus && $scope.loginStatus.status == 'connected';
+    };
     updateLoginStatus()
       .then(updateApiCall);
 
@@ -25,21 +27,6 @@
 
     $scope.logout = function () {
       ezfb.logout();
-    };
-
-    $scope.share = function () {
-      ezfb.ui({
-        method: 'feed',
-        name: 'angular-easyfb API demo',
-        picture: 'http://plnkr.co/img/plunker.png',
-        link: 'http://plnkr.co/edit/qclqht?p=preview',
-        description: 'angular-easyfb is an AngularJS module wrapping Facebook SDK.' +
-          ' Facebook integration in AngularJS made easy!' +
-          ' Please try it and feel free to give feedbacks.'
-      })
-        .then(function (res) {
-          console.log(res);
-        });
     };
 
     var autoToJSON = ['loginStatus', 'apiRes'];

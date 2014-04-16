@@ -28,6 +28,6 @@ config(function ($routeProvider, $locationProvider) {
 })
 .config(function (ezfbProvider) {
   ezfbProvider.setInitParams({
-    appId: '386469651480295'
+    appId: '277415149092039'
   });  
 });

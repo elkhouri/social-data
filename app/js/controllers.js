@@ -1,27 +1,27 @@
-'use strict';
+(function () {
+  'use strict';
 
-/* Controllers */
+  app = angular.module('myApp.controllers', []);
+  
+  app.controller('AppCtrl', function ($scope, $http) {
+    function updateLoginStatus(more) {
+      ezfb.getLoginStatus(function (res) {
+        $scope.loginStatus = res;
 
-angular.module('myApp.controllers', []).
-  controller('AppCtrl', function ($scope, $http) {
+        (more || angular.noop)();
+      });
+    }
 
-    $http({
-      method: 'GET',
-      url: '/api/name'
-    }).
-    success(function (data, status, headers, config) {
-      $scope.name = data.name;
-    }).
-    error(function (data, status, headers, config) {
-      $scope.name = 'Error!';
-    });
+  });
 
-  }).
-  controller('MyCtrl1', function ($scope) {
-    // write Ctrl here
-
-  }).
-  controller('MyCtrl2', function ($scope) {
+  app.controller('MyCtrl1', function ($scope) {
     // write Ctrl here
 
   });
+
+  app.controller('MyCtrl2', function ($scope) {
+    // write Ctrl here
+
+  });
+
+}());

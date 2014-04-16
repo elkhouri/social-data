@@ -4,6 +4,7 @@
 
 angular.module('myApp', [
   'ngRoute',
+  'ezfb',
   'myApp.controllers',
   'myApp.filters',
   'myApp.services',
@@ -24,4 +25,9 @@ config(function ($routeProvider, $locationProvider) {
     });
 
   $locationProvider.html5Mode(true);
+})
+.config(function (ezfbProvider) {
+  ezfbProvider.setInitParams({
+    appId: '386469651480295'
+  });  
 });

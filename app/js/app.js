@@ -14,7 +14,7 @@ config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
       templateUrl: 'templates/login.html',
-      controller: 'MyCtrl1'
+      controller: 'MainCtrl'
     }).
     when('/view2', {
       templateUrl: 'partials/partial2',

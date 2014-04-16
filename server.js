@@ -16,7 +16,9 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, 'app')));
-
+app.get('/app/*', function(req, res){
+  res.sendfile('app/' + req.originalUrl.substr(5));
+});
 
 /**
  * Start Server

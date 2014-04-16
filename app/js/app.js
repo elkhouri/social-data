@@ -5,6 +5,7 @@
 angular.module('myApp', [
   'ngRoute',
   'ezfb',
+  'ui.bootstrap.tabs',
   'myApp.controllers',
   'myApp.filters',
   'myApp.services',
@@ -13,7 +14,7 @@ angular.module('myApp', [
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
-      templateUrl: 'templates/login.html',
+      templateUrl: 'template/login.html',
       controller: 'MainCtrl'
     }).
     when('/view2', {

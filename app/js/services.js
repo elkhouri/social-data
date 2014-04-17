@@ -5,6 +5,15 @@
   factory('UserService', function ($rootScope, $cookieStore, $q) {
     var factory = {};
     var me = {};
+    var api = {
+      facebook: OAuth.create('facebook'),
+      twitter: OAuth.create('twitter')
+    };
+
+    factory.api = function () {
+      return api;
+    };
+
     factory.me = function () {
       return me;
     };
@@ -14,8 +23,6 @@
       OAuth.popup(provider, function (error, result) {
         if (!error) {
           me[provider] = result;
-          $cookieStore.put('user', result);
-          $rootScope.user = result;
 
           deferred.resolve(result);
         } else {

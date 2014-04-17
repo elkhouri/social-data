@@ -6,12 +6,12 @@
   Hello, Please Login to Facebook First
   <button class="btn btn-sm btn-primary" ng-click="login()">Connect with Facebook</button>
 </h2>
-<button class="btn btn-sm btn-primary" ng-click="signin('twitter')">Connect with Twitter</button>
-<button class="btn btn-sm btn-primary" ng-click="signin('facebook')">Connect with FB</button>
+<button ng-if="!loggedIn('twitter')"  class="btn btn-sm btn-primary" ng-click="signin('twitter')">Connect with Twitter</button>
+<button ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Connect with FB</button>
 
-<div ng-if="loggedIn()">
+<div>
   <tabset>
-    <tab heading="Profile">
+    <tab heading="Profile"  ng-if="loggedIn('facebook')">
       <dl class="dl-horizontal">
         <dt>Name</dt>
         <dd>{{ fb.name }}</dd>
@@ -29,7 +29,7 @@
         <dd>{{ fb.username }}</dd>
       </dl>
     </tab>
-    <tab heading="Friends">
+    <tab heading="Friends" ng-if="loggedIn('facebook')">
       <dl class="dl-horizontal">
         <dt>Number of Friends</dt>
         <dd>{{ numFriends }}</dd>

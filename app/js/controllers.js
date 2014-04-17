@@ -3,16 +3,22 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, UserService) {
-    var api = {};
+  app.controller('MainCtrl', function ($scope, UserService, $cookies) {
+    var api = UserService.api();
+    if(api.facebook)
+      initData('facebook');
+    if(api.twitter)
+      initData('twitter');
 
     $scope.me = {};
     $scope.fb = {};
+//    console.log(api);
 
     $scope.signin = function (provider) {
       UserService.signin(provider).then(function (res) {
         $scope.me = UserService.me();
         api[provider] = res;
+//        console.log(res);
 
         initData(provider);
       });
@@ -22,8 +28,8 @@
 //      ezfb.logout();
     };
 
-    $scope.loggedIn = function () {
-      return Object.getOwnPropertyNames($scope.me).length !== 0;
+    $scope.loggedIn = function (provider) {
+      return api[provider];
     };
 
     function initData(provider) {
@@ -34,6 +40,7 @@
     }
 
     function initFB() {
+
       api.facebook.get("/me").done(function (res) {
         console.log(res);
         $scope.$apply(function () {

@@ -11,7 +11,6 @@
     "angular-cookies": "latest",
     "angular-bootstrap": "latest",
     "bootstrap": "latest",
-    "angular-easyfb": "latest",
     "oauth.io": "latest"
   }
 }

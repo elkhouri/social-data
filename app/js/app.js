@@ -5,7 +5,6 @@
 
   angular.module('myApp', [
   'ngRoute',
-  'ezfb',
   'ui.bootstrap.tabs',
   'myApp.controllers',
   'myApp.filters',
@@ -13,7 +12,7 @@
   'myApp.directives'
   ])
     .config(function ($routeProvider, $locationProvider) {
-      OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto');
+      OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto', {cache: true});
       $routeProvider.
       when('/', {
         templateUrl: 'template/login.html',
@@ -24,10 +23,5 @@
       });
 
       $locationProvider.html5Mode(true);
-    })
-    .config(function (ezfbProvider) {
-      ezfbProvider.setInitParams({
-        appId: '277415149092039'
-      });
     });
 }());

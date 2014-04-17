@@ -1,17 +1,13 @@
 (function () {
   'use strict';
 
-  angular.module('myApp.services', ['ngCookies']).
-  factory('UserService', function ($rootScope, $cookieStore, $q) {
+  var app = angular.module('myApp.services', []);
+
+  app.factory('UserService', function ($q) {
     var factory = {};
-    var me = {};
-    var api = {
+    var me = {
       facebook: OAuth.create('facebook'),
       twitter: OAuth.create('twitter')
-    };
-
-    factory.api = function () {
-      return api;
     };
 
     factory.me = function () {
@@ -32,9 +28,9 @@
       });
       return deferred.promise;
     };
-    factory.logout = function () {
-      $cookieStore.remove('user');
-      delete $rootScope.user;
+    factory.logout = function (provider) {
+      OAuth.clearCache(provider);
+      me[provider] = false;
     };
     return factory;
   });

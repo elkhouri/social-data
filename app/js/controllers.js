@@ -3,33 +3,27 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, UserService, $cookies) {
-    var api = UserService.api();
-    if(api.facebook)
-      initData('facebook');
-    if(api.twitter)
-      initData('twitter');
-
-    $scope.me = {};
+  app.controller('MainCtrl', function ($scope, UserService) {
+    var me = UserService.me();
     $scope.fb = {};
-//    console.log(api);
+
+    for (var provider in me) {
+      if (me[provider])
+        initData(provider);
+    }
 
     $scope.signin = function (provider) {
       UserService.signin(provider).then(function (res) {
-        $scope.me = UserService.me();
-        api[provider] = res;
-//        console.log(res);
-
         initData(provider);
       });
     };
 
-    $scope.logout = function () {
-//      ezfb.logout();
+    $scope.logout = function (provider) {
+      UserService.logout(provider);
     };
 
     $scope.loggedIn = function (provider) {
-      return api[provider];
+      return me[provider];
     };
 
     function initData(provider) {
@@ -40,8 +34,7 @@
     }
 
     function initFB() {
-
-      api.facebook.get("/me").done(function (res) {
+      me.facebook.get("/me").done(function (res) {
         console.log(res);
         $scope.$apply(function () {
           $scope.fb = res;
@@ -50,8 +43,8 @@
     }
 
     function initTW() {
-      api.twitter.get("/1.1/statuses/user_timeline.json").done(function (res) {
-        console.log(res);
+     me.twitter.get("/1.1/statuses/user_timeline.json?count=1").done(function (res) {
+       console.log(res);
       });
     }
 

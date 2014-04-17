@@ -11,19 +11,20 @@
   'myApp.filters',
   'myApp.services',
   'myApp.directives'
-]).
-  config(function ($routeProvider, $locationProvider) {
-    $routeProvider.
-    when('/', {
-      templateUrl: 'template/login.html',
-      controller: 'MainCtrl'
-    }).
-    otherwise({
-      redirectTo: '/'
-    });
+  ])
+    .config(function ($routeProvider, $locationProvider) {
+      OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto');
+      $routeProvider.
+      when('/', {
+        templateUrl: 'template/login.html',
+        controller: 'MainCtrl'
+      }).
+      otherwise({
+        redirectTo: '/'
+      });
 
-    $locationProvider.html5Mode(true);
-  })
+      $locationProvider.html5Mode(true);
+    })
     .config(function (ezfbProvider) {
       ezfbProvider.setInitParams({
         appId: '277415149092039'

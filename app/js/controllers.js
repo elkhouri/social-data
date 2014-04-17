@@ -3,38 +3,42 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, ezfb, $q) {
+  app.controller('MainCtrl', function ($rootScope, $scope, $http, ezfb, $q, UserService) {
+    var api = {};
 
-    updateMe();
+    //    updateMe();
+    //
+    //    ezfb.Event.subscribe('auth.statusChange', function (statusRes) {
+    //      $scope.loginStatus = statusRes;
+    //
+    //      updateMe();
+    //      initData();
+    //    });
 
-    ezfb.Event.subscribe('auth.statusChange', function (statusRes) {
-      $scope.loginStatus = statusRes;
+    //    $scope.login = function () {
+    //      ezfb.login(null, {
+    //        scope: 'email,user_likes,user_friends'
+    //      });
+    //    };
 
-      updateMe();
-      initData();
-    });
+    $scope.me = {};
+    $scope.fb = $scope.me.facebook;
 
-    $scope.login = function () {
-      ezfb.login(null, {
-        scope: 'email,user_likes,user_friends'
-      });
-    };
+    $scope.signin = function (provider) {
+      UserService.signin(provider).then(function (res) {
+        $scope.me = UserService.me();
+        api[provider] = res;
 
-    $scope.twitterLogin = function () {
-      OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto');
-      OAuth.popup('twitter', function (error, result) {
-        //handle error with error
-        //use result.access_token in your API request
-        alert("popup");
+        initData(provider);
       });
     };
 
     $scope.logout = function () {
-      ezfb.logout();
+//      ezfb.logout();
     };
 
     $scope.loggedIn = function () {
-      return $scope.loginStatus && $scope.loginStatus.status == 'connected';
+      return Object.getOwnPropertyNames($scope.me).length !== 0;
     };
 
     function updateMe() {
@@ -48,12 +52,25 @@
         });
     }
 
-    function initData() {
-      ezfb.api('/me/friends').then(function (res) {
-        $scope.numFriends = res.data.length;
-        res.data.forEach(function (f) {
+    function initData(provider) {
+      if (provider === "facebook")
+        initFB();
+      if (provider === "twitter")
+        initTW();
+    }
 
+    function initFB() {
+      api.facebook.get("/me").done(function (res) {
+        console.log(res);
+        $scope.$apply(function () {
+          $scope.fb = res;
         });
+      });
+    }
+
+    function initTW() {
+      api.twitter.get("/1.1/statuses/user_timeline.json").done(function (res) {
+        console.log(res);
       });
     }
 

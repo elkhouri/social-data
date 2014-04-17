@@ -6,12 +6,12 @@
   Hello, Please Login to Facebook First
   <button class="btn btn-sm btn-primary" ng-click="login()">Connect with Facebook</button>
 </h2>
-<button ng-if="!loggedIn('twitter')"  class="btn btn-sm btn-primary" ng-click="signin('twitter')">Connect with Twitter</button>
+<button ng-if="!loggedIn('twitter')" class="btn btn-sm btn-primary" ng-click="signin('twitter')">Connect with Twitter</button>
 <button ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Connect with FB</button>
 
 <div>
   <tabset>
-    <tab heading="Profile"  ng-if="loggedIn('facebook')">
+    <tab heading="Profile" ng-if="loggedIn('facebook')">
       <dl class="dl-horizontal">
         <dt>Name</dt>
         <dd>{{ fb.name }}</dd>
@@ -29,11 +29,36 @@
         <dd>{{ fb.username }}</dd>
       </dl>
     </tab>
+
     <tab heading="Friends" ng-if="loggedIn('facebook')">
       <dl class="dl-horizontal">
         <dt>Number of Friends</dt>
         <dd>{{ numFriends }}</dd>
       </dl>
+    </tab>
+
+    <tab heading="Twitter" ng-if="loggedIn('twitter')">
+      <div class="panel panel-default">
+        <div class="panel-heading">Here are your 5 latest tweets</div>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="t in tweets" ng-bind="t.text"></li>
+        </ul>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Here are your timeline's 5 latest tweets</div>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="t in homeTweets" ng-bind="t.text"></li>
+        </ul>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Here are your 5 latest mentioned tweets</div>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="t in mentions" ng-bind="t.text"></li>
+        </ul>
+      </div>
     </tab>
   </tabset>
 </div>

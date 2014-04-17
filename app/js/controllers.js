@@ -35,7 +35,6 @@
 
     function initFB() {
       me.facebook.get("/me").done(function (res) {
-        console.log(res);
         $scope.$apply(function () {
           $scope.fb = res;
         });
@@ -43,9 +42,14 @@
     }
 
     function initTW() {
-     me.twitter.get("/1.1/statuses/user_timeline.json?count=1").done(function (res) {
-       console.log(res);
-      });
+      $.when(me.twitter.get("/1.1/statuses/user_timeline.json?count=5"),
+        me.twitter.get("/1.1/statuses/home_timeline.json?count=5"),
+        me.twitter.get("/1.1/statuses/mentions_timeline.json?count=5"))
+        .done(function (tweets, homeTweets, mentions) {
+          $scope.tweets = tweets[0];
+          $scope.homeTweets = homeTweets[0];
+          $scope.mentions = mentions[0];
+        });
     }
 
   });

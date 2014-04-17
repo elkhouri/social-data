@@ -1,3 +1,4 @@
+<div class="alert alert-danger" ng-if="error.text" ng-bind="error.text"></div>
 <h2 ng-if="!loggedIn('twitter') && !loggedIn('facebook')">
   Hello, Please Login to Facebook or Twitter
 </h2>
@@ -14,7 +15,8 @@
 <button ng-if="loggedIn('twitter')" class="btn btn-sm btn-danger" ng-click="logout('twitter')">Logout of Twitter</button>
 <button ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Login to Facebook</button>
 <button ng-if="loggedIn('facebook')" class="btn btn-sm btn-danger" ng-click="logout('facebook')">Logout of Facebook</button>
-<br><br>
+<br>
+<br>
 <div ng-if="loggedIn('twitter') || loggedIn('facebook')">
   <tabset>
     <tab heading="Profile" ng-if="loggedIn('facebook')">
@@ -44,22 +46,33 @@
     </tab>
 
     <tab heading="Twitter" ng-if="loggedIn('twitter')">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-3 control-label">Number of tweets to retrive</label>
+          <div class="col-sm-1">
+            <input type='number' ng-model="numTweets" class="form-control">
+          </div>
+          <div class="col-sm-2">
+            <button class='btn btn-small btn-default' ng-click="getTweets(numTweets)">Get</button>
+          </div>
+        </div>
+      </form>
       <div class="panel panel-default">
-        <div class="panel-heading">Here are your 5 latest tweets</div>
+        <div class="panel-heading">Here are your {{ actualNum }} latest tweets</div>
 
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="t in tweets" ng-bind="t.text"></li>
         </ul>
       </div>
       <div class="panel panel-default">
-        <div class="panel-heading">Here are your timeline's 5 latest tweets</div>
+        <div class="panel-heading">Here are your timeline's {{ actualNum }} latest tweets</div>
 
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="t in homeTweets" ng-bind="t.text"></li>
         </ul>
       </div>
       <div class="panel panel-default">
-        <div class="panel-heading">Here are your 5 latest mentioned tweets</div>
+        <div class="panel-heading">Here are your {{ actualNum }} latest mentioned tweets</div>
 
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="t in mentions" ng-bind="t.text"></li>

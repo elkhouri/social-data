@@ -46,9 +46,11 @@
         me.twitter.get("/1.1/statuses/home_timeline.json?count=5"),
         me.twitter.get("/1.1/statuses/mentions_timeline.json?count=5"))
         .done(function (tweets, homeTweets, mentions) {
-          $scope.tweets = tweets[0];
-          $scope.homeTweets = homeTweets[0];
-          $scope.mentions = mentions[0];
+          $scope.$apply(function () {
+            $scope.tweets = tweets[0];
+            $scope.homeTweets = homeTweets[0];
+            $scope.mentions = mentions[0];
+          });
         });
     }
 

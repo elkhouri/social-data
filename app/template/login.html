@@ -1,15 +1,21 @@
-<h2 ng-if="loggedIn()">
-  Hello, {{ fb.first_name }}
-  <button class="btn btn-sm btn-danger" ng-click="logout()">Logout</button>
+<h2 ng-if="!loggedIn('twitter') && !loggedIn('facebook')">
+  Hello, Please Login to Facebook or Twitter
 </h2>
-<h2 ng-if="!loggedIn()">
-  Hello, Please Login to Facebook First
-  <button class="btn btn-sm btn-primary" ng-click="login()">Connect with Facebook</button>
+<h2 ng-if="!loggedIn('twitter') && loggedIn('facebook')">
+  Hello, Please Login to Twitter
 </h2>
-<button ng-if="!loggedIn('twitter')" class="btn btn-sm btn-primary" ng-click="signin('twitter')">Connect with Twitter</button>
-<button ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Connect with FB</button>
-
-<div>
+<h2 ng-if="!loggedIn('facebook') && loggedIn('twitter')">
+  Hello, Please Login to Facebook
+</h2>
+<h2 ng-if="loggedIn('twitter') && loggedIn('facebook')">
+  Hello, {{ fb.first_name }}. Here are your data.
+</h2>
+<button ng-if="!loggedIn('twitter')" class="btn btn-sm btn-primary" ng-click="signin('twitter')">Login to Twitter</button>
+<button ng-if="loggedIn('twitter')" class="btn btn-sm btn-danger" ng-click="logout('twitter')">Logout of Twitter</button>
+<button ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Login to Facebook</button>
+<button ng-if="loggedIn('facebook')" class="btn btn-sm btn-danger" ng-click="logout('facebook')">Logout of Facebook</button>
+<br><br>
+<div ng-if="loggedIn('twitter') || loggedIn('facebook')">
   <tabset>
     <tab heading="Profile" ng-if="loggedIn('facebook')">
       <dl class="dl-horizontal">
@@ -33,7 +39,7 @@
     <tab heading="Friends" ng-if="loggedIn('facebook')">
       <dl class="dl-horizontal">
         <dt>Number of Friends</dt>
-        <dd>{{ numFriends }}</dd>
+        <dd ng-bind="numFriends"></dd>
       </dl>
     </tab>
 

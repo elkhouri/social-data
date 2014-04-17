@@ -3,8 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "latest",
-    "body-parser": "latest",
-    "jade": "latest"
+    "express": "latest"
   }
 }

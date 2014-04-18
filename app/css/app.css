@@ -1,4 +1,15 @@
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
 .form-horizontal {
- padding-top: 10px;
+  padding-top: 10px;
+}
+.main {
+  border: 1px solid black;
+}
+.jumbotron {
+  margin-top: 10px !important;
 }

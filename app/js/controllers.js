@@ -15,6 +15,10 @@
     $scope.sameGender = 0;
     $scope.sameSchool = 0;
     $scope.sameLocation = 0;
+    $scope.avgLen = 0;
+    $scope.avgWordLen = 0;
+    $scope.avgDelay = 0;
+    $scope.avgPerDay = 0;
     $scope.actualNum = $scope.numTweets;
 
     for (var provider in me) {
@@ -56,7 +60,7 @@
             $scope.sameGender += 1;
         }
         if ("location" in f && "location" in me) {
-          if (f.location.name === me.location.nam)
+          if (f.location.name === me.location.name)
             $scope.sameLocation += 1;
         }
         if ("education" in f && "education" in me) {
@@ -67,16 +71,35 @@
             }
           });
         }
-
       });
+    }
+
+    function analyzeStatuses(friends, statuses) {
+      var time;
+      statuses.forEach(function (s, i) {
+        $scope.avgLen += s.message.length / statuses.length;
+        $scope.avgWordLen += countWords(s.message) / statuses.length;
+        if (time) {
+          var newTime = new Date(s.updated_time);
+          var diff = (time - newTime) / 1000 / 60 / 60;
+          time = newTime;
+          $scope.avgDelay = diff;
+        }
+        time = new Date(s.updated_time);
+      });
+      var firstTime = new Date(statuses[0].updated_time);
+      var lastTime = new Date(statuses[statuses.length - 1].updated_time);
+      $scope.avgPerDay = statuses.length / ((firstTime - lastTime) / 1000 / 60 / 60 / 24);
     }
 
     function initFB() {
       $.when(me.facebook.get("/me"),
-        me.facebook.get("/me/friends?fields=name,birthday,education,languages,location,gender"))
-        .done(function (me, friends) {
+        me.facebook.get("/me/friends?fields=name,birthday,education,languages,location,gender"),
+        me.facebook.get("/me/statuses"))
+        .done(function (me, friends, statuses) {
           $scope.$apply(function () {
             analyzeFriends(friends[0].data, me[0]);
+            analyzeStatuses(friends[0].data, statuses[0].data);
           });
         });
     }
@@ -103,6 +126,13 @@
       //        });
     }
     $scope.getTweets = initTW;
+
+    function countWords(s) {
+      s = s.replace(/(^\s*)|(\s*$)/gi, ""); //exclude  start and end white-space
+      s = s.replace(/[ ]{2,}/gi, " "); //2 or more space to 1
+      s = s.replace(/\n /, "\n"); // exclude newline with a start spacing
+      return s.split(' ').length;
+    }
 
   });
 

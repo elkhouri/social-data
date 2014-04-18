@@ -3,7 +3,7 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, UserService) {
+  app.controller('MainCtrl', function ($scope, $http, UserService) {
     var me = UserService.me();
     $scope.fb = {};
     $scope.error = {};
@@ -20,7 +20,7 @@
     $scope.avgDelay = 0;
     $scope.avgPerDay = 0;
     $scope.actualNum = $scope.numTweets;
-
+    initTW(1);
     for (var provider in me) {
       if (me[provider])
         initData(provider);
@@ -119,6 +119,15 @@
 
 
     function initTW(numTweets) {
+      $http.get('/tw/mentions').success(function(data){
+        $scope.mentions = data;
+      });
+      $http.get('/tw/homeTweets').success(function(data){
+        $scope.homeTweets = data;
+      });
+      $http.get('/tw/userTweets').success(function(data){
+        $scope.tweets = data;
+      });
       //      $.when(me.twitter.get("/1.1/statuses/user_timeline.json?count=" + numTweets),
       //        me.twitter.get("/1.1/statuses/home_timeline.json?count=" + numTweets),
       //        me.twitter.get("/1.1/statuses/mentions_timeline.json?count=" + numTweets))

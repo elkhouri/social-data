@@ -18,7 +18,7 @@
   <button ng-if="loggedIn('facebook')" class="btn btn-sm btn-danger" ng-click="logout('facebook')">Logout of Facebook</button>
 </div>
 <a href="/auth/facebook" class="btn btn-warning">TEST</a>
-<div ng-if="loggedIn('twitter') || loggedIn('facebook')">
+<div ng-if="loggedIn('twitter') || loggedIn('facebook') || true">
   <div class="main">
     <tabset>
       <tab heading="Profile" ng-if="loggedIn('facebook')">
@@ -85,7 +85,7 @@
 
       </tab>
 
-      <tab heading="Twitter" ng-if="loggedIn('twitter')">
+      <tab heading="Twitter" ng-if="loggedIn('twitter') || true">
         <form class="form-horizontal" role="form">
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-3 control-label">Number of tweets to retrive</label>

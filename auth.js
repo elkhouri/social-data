@@ -1,9 +1,12 @@
 var dotenv = require('dotenv');
 var graph = require('fbgraph');
+var twit = require('twit');
 dotenv.load();
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
 var TWITTER_CONSUMER_SECRET = process.env.TWITTER_CONSUMER_SECRET;
+var access_token = process.env.access_token;
+var access_token_secret = process.env.access_token_secret;
 var client_id = process.env.client_id;
 var client_secret = process.env.client_secret;
 
@@ -40,3 +43,10 @@ exports.fb = function (req, res) {
     res.redirect('/');
   });
 };
+
+exports.twit = new twit({
+  consumer_key: TWITTER_CONSUMER_KEY,
+  consumer_secret: TWITTER_CONSUMER_SECRET,
+  access_token: access_token,
+  access_token_secret: access_token_secret
+});

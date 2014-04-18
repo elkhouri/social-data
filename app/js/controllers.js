@@ -27,10 +27,22 @@
     }
 
     $scope.signin = function (provider) {
-      UserService.signin(provider).then(function (res) {
-        initData(provider);
-      });
+      OAuth.redirect(provider, "/");
+//      UserService.signin(provider).then(function (res) {
+//        initData(provider);
+//      });
     };
+//          OAuth.callback(provider, function (error, result) {
+//        console.log("SDF");
+//        if (!error) {
+//          me[provider] = result;
+//
+//          deferred.resolve(result);
+//        } else {
+//          deferred.reject(error);
+//        }
+//
+//      });
 
     $scope.logout = function (provider) {
       UserService.logout(provider);

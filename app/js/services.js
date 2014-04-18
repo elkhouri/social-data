@@ -13,10 +13,34 @@
     factory.me = function () {
       return me;
     };
+    OAuth.callback('twitter', function (error, result) {
+      console.log("SDF");
+      if (!error) {
+        me['twitter'] = result;
+
+//        deferred.resolve(result);
+      } else {
+//        deferred.reject(error);
+      }
+
+    });
+        OAuth.callback('facebook', function (error, result) {
+      console.log("SDF");
+      if (!error) {
+        me['facebook'] = result;
+
+//        deferred.resolve(result);
+      } else {
+//        deferred.reject(error);
+      }
+
+    });
 
     factory.signin = function (provider) {
       var deferred = $q.defer();
-      OAuth.popup(provider, function (error, result) {
+      OAuth.redirect(provider, "/");
+      OAuth.callback(provider, function (error, result) {
+        console.log("SDF");
         if (!error) {
           me[provider] = result;
 
@@ -26,6 +50,16 @@
         }
 
       });
+      //      OAuth.popup(provider, function (error, result) {
+      //        if (!error) {
+      //          me[provider] = result;
+      //
+      //          deferred.resolve(result);
+      //        } else {
+      //          deferred.reject(error);
+      //        }
+      //
+      //      });
       return deferred.promise;
     };
     factory.logout = function (provider) {

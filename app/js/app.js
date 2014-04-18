@@ -19,12 +19,9 @@
       when('/', {
         templateUrl: 'template/login.html',
         controller: 'MainCtrl'
-      }).
-      otherwise({
-        redirectTo: '/'
-      });
+      }).otherwise({redirectTo:'/'});
 
-      $locationProvider.html5Mode(true);
+//      $locationProvider.html5Mode(true);
     });
 
 }());

@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "latest"
+    "express": "3.*",
+    "passport": "*",
+    "passport-facebook": "*",
+    "passport-twitter": "*",
+    "fbgraph": "latest",
+    "dotenv": "*",
+    "twit": "latest"
   }
 }

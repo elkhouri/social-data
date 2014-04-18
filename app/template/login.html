@@ -23,6 +23,8 @@
       <dl class="dl-horizontal">
         <dt>Name</dt>
         <dd>{{ fb.name }}</dd>
+        <dt>Birthday</dt>
+        <dd>{{ fb.birthday }}</dd>
         <dt>Gender</dt>
         <dd>{{ fb.gender }}</dd>
         <dt>Education</dt>
@@ -39,10 +41,26 @@
     </tab>
 
     <tab heading="Friends" ng-if="loggedIn('facebook')">
-      <dl class="dl-horizontal">
-        <dt>Number of Friends</dt>
-        <dd ng-bind="numFriends"></dd>
-      </dl>
+      <div class="row">
+        <strong class="col-sm-3">Number of Friends</strong>
+        <p class="col-sm-9" ng-bind="numFriends"></p>
+      </div>
+      <div class="row">
+        <strong class="col-sm-3">Number of Friends with same birthday month</strong>
+        <p class="col-sm-9" ng-bind="sameBDay"></p>
+      </div>
+      <div class="row">
+        <strong class="col-sm-3">Number of Friends with same gender</strong>
+        <p class="col-sm-9" ng-bind="sameGender"></p>
+      </div>
+      <div class="row">
+        <strong class="col-sm-3">Number of Friends who went to a same school</strong>
+        <p class="col-sm-9" ng-bind="sameSchool"></p>
+      </div>
+      <div class="row">
+        <strong class="col-sm-3">Number of Friends who are in the same location</strong>
+        <p class="col-sm-9" ng-bind="sameLocation"></p>
+      </div>
     </tab>
 
     <tab heading="Twitter" ng-if="loggedIn('twitter')">

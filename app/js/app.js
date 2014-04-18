@@ -12,7 +12,9 @@
   'myApp.directives'
   ])
     .config(function ($routeProvider, $locationProvider) {
-      OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto', {cache: true});
+      OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto', {
+        cache: true
+      });
       $routeProvider.
       when('/', {
         templateUrl: 'template/login.html',
@@ -23,5 +25,6 @@
       });
 
       $locationProvider.html5Mode(true);
-    });
+    })
+
 }());

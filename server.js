@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'app')));
 passport.use(new FacebookStrategy({
     clientID: client_id,
     clientSecret: client_secret,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "http://social-data.herokuapp.com/auth/facebook/callback",
     enableProof: false
   },
   function (accessToken, refreshToken, profile, done) {

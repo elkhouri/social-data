@@ -9,12 +9,13 @@ var access_token = process.env.access_token;
 var access_token_secret = process.env.access_token_secret;
 var client_id = process.env.client_id;
 var client_secret = process.env.client_secret;
+var host = process.env.host;
 
 var conf = {
   client_id: client_id,
   client_secret: client_secret,
   scope: 'email, user_about_me, user_birthday, user_location, publish_stream',
-  redirect_uri: 'http://localhost:3000/auth/facebook'
+  redirect_uri: host+'/auth/facebook'
 };
 
 exports.fb = function (req, res) {

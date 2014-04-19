@@ -22,7 +22,11 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'app')));
 
 app.get('/auth/facebook', auth.fb);
+
 app.get('/fb/me', fb.me);
+app.get('/fb/friends', fb.friends);
+app.get('/fb/statuses', fb.statuses);
+
 app.get('/tw/mentions', tw.mentions);
 app.get('/tw/homeTweets', tw.homeTweets);
 app.get('/tw/userTweets', tw.userTweets);

@@ -18,6 +18,7 @@
   <button ng-if="loggedIn('facebook')" class="btn btn-sm btn-danger" ng-click="logout('facebook')">Logout of Facebook</button>
 </div>
 <a href="/auth/facebook" class="btn btn-warning">TEST</a>
+<button ng-click="testFB()">TEST FB</button>
 <div ng-if="loggedIn('twitter') || loggedIn('facebook') || true">
   <div class="main">
     <tabset>

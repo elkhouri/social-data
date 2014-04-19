@@ -20,7 +20,19 @@
     $scope.avgDelay = 0;
     $scope.avgPerDay = 0;
     $scope.actualNum = $scope.numTweets;
-    initTW(1);
+    
+    $scope.testFB = function(){
+      $http.get("/fb/me").success(function(data){
+        console.log(data);
+      });
+      $http.get("/fb/friends").success(function(data){
+        console.log(data);
+      });
+      $http.get("/fb/statuses").success(function(data){
+        console.log(data);
+      });
+    };
+
     for (var provider in me) {
       if (me[provider])
         initData(provider);
@@ -32,17 +44,6 @@
 //        initData(provider);
 //      });
     };
-//          OAuth.callback(provider, function (error, result) {
-//        console.log("SDF");
-//        if (!error) {
-//          me[provider] = result;
-//
-//          deferred.resolve(result);
-//        } else {
-//          deferred.reject(error);
-//        }
-//
-//      });
 
     $scope.logout = function (provider) {
       UserService.logout(provider);
@@ -116,8 +117,6 @@
         });
     }
 
-
-
     function initTW(numTweets) {
       $http.get('/tw/mentions').success(function(data){
         $scope.mentions = data;
@@ -128,23 +127,6 @@
       $http.get('/tw/userTweets').success(function(data){
         $scope.tweets = data;
       });
-      //      $.when(me.twitter.get("/1.1/statuses/user_timeline.json?count=" + numTweets),
-      //        me.twitter.get("/1.1/statuses/home_timeline.json?count=" + numTweets),
-      //        me.twitter.get("/1.1/statuses/mentions_timeline.json?count=" + numTweets))
-      //        .done(function (tweets, homeTweets, mentions) {
-      //          $scope.$apply(function () {
-      //            $scope.tweets = tweets[0];
-      //            $scope.homeTweets = homeTweets[0];
-      //            $scope.mentions = mentions[0];
-      //            $scope.actualNum = numTweets;
-      //            delete $scope.error.text;
-      //          });
-      //        })
-      //        .fail(function (error) {
-      //          $scope.$apply(function () {
-      //            $scope.error.text = error.statusText;
-      //          });
-      //        });
     }
     $scope.getTweets = initTW;
 

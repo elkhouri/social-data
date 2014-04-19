@@ -50,3 +50,5 @@ exports.twit = new twit({
   access_token: access_token,
   access_token_secret: access_token_secret
 });
+
+exports.graph = graph;

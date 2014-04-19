@@ -1,6 +1,8 @@
 var dotenv = require('dotenv');
 var graph = require('fbgraph');
 var twit = require('twit');
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 dotenv.load();
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -19,32 +21,33 @@ var conf = {
   redirect_uri: 'http://localhost:3000/auth/facebook'
 };
 
-exports.fb = function (req, res) {
-  if (!req.query.code) {
-    var authUrl = graph.getOauthUrl({
-      "client_id": conf.client_id,
-      "redirect_uri": conf.redirect_uri,
-      "scope": conf.scope
-    });
+//exports.fb = function (req, res) {
+//  if (!req.query.code) {
+//    var authUrl = graph.getOauthUrl({
+//      "client_id": conf.client_id,
+//      "redirect_uri": conf.redirect_uri,
+//      "scope": conf.scope
+//    });
+//
+//    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
+//      res.redirect(authUrl);
+//    } else { //req.query.error == 'access_denied'
+//      res.send('access denied');
+//    }
+//    return;
+//  }
+//
+//  graph.authorize({
+//    "client_id": conf.client_id,
+//    "redirect_uri": conf.redirect_uri,
+//    "client_secret": conf.client_secret,
+//    "code": req.query.code
+//  }, function (err, facebookRes) {
+//    console.log(facebookRes);
+//    res.redirect('/');
+//  });
+//};
 
-    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
-      res.redirect(authUrl);
-    } else { //req.query.error == 'access_denied'
-      res.send('access denied');
-    }
-    return;
-  }
-
-  graph.authorize({
-    "client_id": conf.client_id,
-    "redirect_uri": conf.redirect_uri,
-    "client_secret": conf.client_secret,
-    "code": req.query.code
-  }, function (err, facebookRes) {
-    console.log(facebookRes);
-    res.redirect('/');
-  });
-};
 
 exports.twit = new twit({
   consumer_key: TWITTER_CONSUMER_KEY,

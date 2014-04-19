@@ -50,8 +50,10 @@ app.use(express.static(path.join(__dirname, 'app')));
 passport.use(new FacebookStrategy({
     clientID: client_id,
     clientSecret: client_secret,
-    callbackURL: "http://social-data.herokuapp.com/auth/facebook/callback",
-    enableProof: false
+//    callbackURL: "http://social-data.herokuapp.com/auth/facebook/callback",
+  callbackURL: "http://localhost:3000/auth/facebook/callback",
+    enableProof: false,
+  display: 'touch'
   },
   function (accessToken, refreshToken, profile, done) {
     return done(null, profile);
@@ -63,11 +65,12 @@ passport.use(new FacebookStrategy({
 
 //app.get('/auth/facebook', auth.fb);
 app.get('/auth/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', { display: 'touch' }));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    display: 'touch'
   }),
   function (req, res) {
     // Successful authentication, redirect home.

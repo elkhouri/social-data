@@ -18,35 +18,36 @@ var conf = {
   client_secret: client_secret,
   scope: 'email, user_about_me, user_birthday, user_location, publish_stream',
 //  redirect_uri: 'https://social-data.herokuapp.com/auth/facebook'
-  redirect_uri: 'http://localhost:3000/auth/facebook'
+//  redirect_uri: 'http://localhost:3000/auth/facebook'
+  redirect_uri: host+'/auth/facebook'
 };
 
-//exports.fb = function (req, res) {
-//  if (!req.query.code) {
-//    var authUrl = graph.getOauthUrl({
-//      "client_id": conf.client_id,
-//      "redirect_uri": conf.redirect_uri,
-//      "scope": conf.scope
-//    });
-//
-//    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
-//      res.redirect(authUrl);
-//    } else { //req.query.error == 'access_denied'
-//      res.send('access denied');
-//    }
-//    return;
-//  }
-//
-//  graph.authorize({
-//    "client_id": conf.client_id,
-//    "redirect_uri": conf.redirect_uri,
-//    "client_secret": conf.client_secret,
-//    "code": req.query.code
-//  }, function (err, facebookRes) {
-//    console.log(facebookRes);
-//    res.redirect('/');
-//  });
-//};
+exports.fb = function (req, res) {
+  if (!req.query.code) {
+    var authUrl = graph.getOauthUrl({
+      "client_id": conf.client_id,
+      "redirect_uri": conf.redirect_uri,
+      "scope": conf.scope
+    });
+
+    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
+      res.redirect(authUrl);
+    } else { //req.query.error == 'access_denied'
+      res.send('access denied');
+    }
+    return;
+  }
+
+  graph.authorize({
+    "client_id": conf.client_id,
+    "redirect_uri": conf.redirect_uri,
+    "client_secret": conf.client_secret,
+    "code": req.query.code
+  }, function (err, facebookRes) {
+    console.log(facebookRes);
+    res.redirect('/');
+  });
+};
 
 
 exports.twit = new twit({

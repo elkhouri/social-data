@@ -31,6 +31,10 @@ app.get('/tw/mentions', tw.mentions);
 app.get('/tw/homeTweets', tw.homeTweets);
 app.get('/tw/userTweets', tw.userTweets);
 
+app.post('/', function(req, res){
+  res.redirect('/');
+});
+
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));
 });

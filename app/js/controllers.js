@@ -25,15 +25,15 @@
     if ($cookies.facebook)
       initFB();
     if ($cookies.twitter) {
-      $scope.tweetUser = $cookies['twitter'];
+      $scope.tweetUser = $cookies.twitter;
       initTW(5);
     }
 
-    $scope.signin = function (provider) {
+    $scope.signin = function (provider, user) {
       me[provider] = true;
       $cookies[provider] = true;
       if (provider === "twitter")
-        $cookies[provider] = $scope.tweetUser;
+        $cookies[provider] = user;
       initData(provider);
     };
 
@@ -106,7 +106,6 @@
         var me = resList[0].data;
         var friends = resList[1].data.data;
         var statuses = resList[2].data.data;
-        console.log(resList);
 
         $scope.fb = me;
         analyzeFriends(friends, me);
@@ -115,8 +114,8 @@
       });
     }
 
-    function initTW(numTweets) {
-      $http.get('/tw/userTweets/' + $scope.tweetUser).success(function (data) {
+    function initTW(user) {
+      $http.get('/tw/userTweets/' + $cookies.twitter).success(function (data) {
         $scope.tweets = data;
       });
     }

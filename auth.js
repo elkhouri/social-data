@@ -15,7 +15,8 @@ var conf = {
   client_id: client_id,
   client_secret: client_secret,
   scope: 'email, user_about_me, user_birthday, user_location, publish_stream',
-  redirect_uri: 'http://social-data.herokuapp.com/auth/facebook'
+//  redirect_uri: 'http://social-data.herokuapp.com/auth/facebook'
+  redirect_uri: 'http://localhost:3000/auth/facebook'
 };
 
 exports.fb = function (req, res) {

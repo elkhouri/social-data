@@ -3,7 +3,7 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, UserService) {
+  app.controller('MainCtrl', function ($scope, $http, $q, UserService) {
     var me = UserService.me();
     $scope.fb = {};
     $scope.error = {};
@@ -21,22 +21,12 @@
     $scope.avgPerDay = 0;
     $scope.actualNum = $scope.numTweets;
     
-    $scope.testFB = function(){
-      $http.get("/fb/me").success(function(data){
-        console.log(data);
-      });
-      $http.get("/fb/friends").success(function(data){
-        console.log(data);
-      });
-      $http.get("/fb/statuses").success(function(data){
-        console.log(data);
-      });
-    };
+    $scope.testFB = initFB;
 
-    for (var provider in me) {
-      if (me[provider])
-        initData(provider);
-    }
+//    for (var provider in me) {
+//      if (me[provider])
+//        initData(provider);
+//    }
 
     $scope.signin = function (provider) {
       OAuth.redirect(provider, "/");
@@ -87,7 +77,7 @@
       });
     }
 
-    function analyzeStatuses(friends, statuses) {
+    function analyzeStatuses(statuses) {
       var time;
       statuses.forEach(function (s, i) {
         $scope.avgLen += s.message.length / statuses.length;
@@ -106,15 +96,23 @@
     }
 
     function initFB() {
-      $.when(me.facebook.get("/me"),
-        me.facebook.get("/me/friends?fields=name,birthday,education,languages,location,gender"),
-        me.facebook.get("/me/statuses"))
-        .done(function (me, friends, statuses) {
-          $scope.$apply(function () {
-            analyzeFriends(friends[0].data, me[0]);
-            analyzeStatuses(friends[0].data, statuses[0].data);
-          });
-        });
+      var promises = [];
+      promises.push($http.get("/fb/me").success(function(me){
+      }));
+      promises.push($http.get("/fb/friends").success(function(friends){
+      }));
+      promises.push($http.get("/fb/statuses").success(function(statuses){
+      }));
+      $q.all(promises).then(function(resList){
+        var me = resList[0].data;
+        var friends = resList[1].data.data;
+        var statuses = resList[2].data.data;
+        
+        $scope.fb = me;
+        analyzeFriends(friends, me);
+        analyzeStatuses(statuses);
+        
+      });
     }
 
     function initTW(numTweets) {

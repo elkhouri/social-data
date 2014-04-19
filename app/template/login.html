@@ -22,7 +22,7 @@
 <div ng-if="loggedIn('twitter') || loggedIn('facebook') || true">
   <div class="main">
     <tabset>
-      <tab heading="Profile" ng-if="loggedIn('facebook')">
+      <tab heading="Profile" ng-if="loggedIn('facebook') || true">
         <dl class="dl-horizontal">
           <dt>Name</dt>
           <dd>{{ fb.name }}</dd>
@@ -43,7 +43,7 @@
         </dl>
       </tab>
 
-      <tab heading="Friends" ng-if="loggedIn('facebook')">
+      <tab heading="Friends" ng-if="loggedIn('facebook') || true">
         <div class="row">
           <strong class="col-sm-3">Number of Friends</strong>
           <p class="col-sm-9" ng-bind="numFriends"></p>
@@ -66,7 +66,7 @@
         </div>
       </tab>
 
-      <tab heading="Statuses" ng-if="loggedIn('facebook')">
+      <tab heading="Statuses" ng-if="loggedIn('facebook') || true">
         <div class="row">
           <strong class="col-sm-3">Average Status Length in characters</strong>
           <p class="col-sm-9" ng-bind="avgLen | number:2"></p>

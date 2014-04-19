@@ -16,13 +16,19 @@
       OAuth.initialize('S6i3fJXQNTUm7A6opZsJPA_1mto', {
         cache: true
       });
-      $routeProvider.
-      when('/', {
-        templateUrl: 'template/login.html',
-        controller: 'MainCtrl'
-      }).otherwise({
-        redirectTo: '/'
-      });
+      $routeProvider
+        .when('/', {
+          templateUrl: 'template/login.html',
+          controller: 'MainCtrl'
+        }).otherwise({
+          redirectTo: '/'
+        })
+        .when('/facebook', {
+          templateUrl: 'template/facebook.html',
+          controller: 'MainCtrl'
+        }).otherwise({
+          redirectTo: '/'
+        });
 
       //      $locationProvider.html5Mode(true);
     });

@@ -5,7 +5,6 @@ var express = require('express');
 var http = require('http');
 var dotenv = require('dotenv');
 var path = require('path');
-var passport = require('passport');
 
 var auth = require('./auth');
 

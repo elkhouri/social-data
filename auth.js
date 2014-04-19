@@ -1,8 +1,7 @@
 var dotenv = require('dotenv');
 var graph = require('fbgraph');
 var twit = require('twit');
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
+
 dotenv.load();
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
@@ -42,6 +41,7 @@ exports.fb = function (req, res) {
     "client_secret": conf.client_secret,
     "code": req.query.code
   }, function (err, facebookRes) {
+    console.log(facebookRes);
     res.redirect('/');
   });
 };

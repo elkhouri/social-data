@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "express": "3.*",
-    "passport": "*",
-    "passport-facebook": "*",
-    "passport-twitter": "*",
     "fbgraph": "latest",
     "dotenv": "*",
     "twit": "latest"

@@ -3,8 +3,8 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, $q, UserService, $location, $cookies) {
-    var me = UserService.me();
+  app.controller('MainCtrl', function ($scope, $http, $q, $location, $cookies) {
+    var me = {};
     $scope.fb = {};
     $scope.error = {};
     $scope.tweets = {};
@@ -35,10 +35,6 @@
       if (provider === "twitter")
         $cookies[provider] = user;
       initData(provider);
-    };
-
-    $scope.logout = function (provider) {
-      UserService.logout(provider);
     };
 
     $scope.loggedIn = function (provider) {
@@ -110,7 +106,6 @@
         $scope.fb = me;
         analyzeFriends(friends, me);
         analyzeStatuses(statuses);
-
       });
     }
 

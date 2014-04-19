@@ -3,13 +3,14 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, $q, UserService) {
+  app.controller('MainCtrl', function ($scope, $http, $q, UserService, $location, $cookies) {
     var me = UserService.me();
     $scope.fb = {};
     $scope.error = {};
     $scope.tweets = {};
     $scope.homeTweets = {};
     $scope.mentions = {};
+    $scope.tweetUser = '';
     $scope.numTweets = 5;
     $scope.sameBDay = 0;
     $scope.sameGender = 0;
@@ -20,19 +21,20 @@
     $scope.avgDelay = 0;
     $scope.avgPerDay = 0;
     $scope.actualNum = $scope.numTweets;
-    
-    $scope.testFB = initFB;
 
-//    for (var provider in me) {
-//      if (me[provider])
-//        initData(provider);
-//    }
+    if ($cookies.facebook)
+      initFB();
+    if ($cookies.twitter) {
+      $scope.tweetUser = $cookies['twitter'];
+      initTW(5);
+    }
 
     $scope.signin = function (provider) {
-      OAuth.redirect(provider, "/");
-//      UserService.signin(provider).then(function (res) {
-//        initData(provider);
-//      });
+      me[provider] = true;
+      $cookies[provider] = true;
+      if (provider === "twitter")
+        $cookies[provider] = $scope.tweetUser;
+      initData(provider);
     };
 
     $scope.logout = function (provider) {
@@ -40,7 +42,7 @@
     };
 
     $scope.loggedIn = function (provider) {
-      return me[provider];
+      return me[provider] || $cookies[provider];
     };
 
     function initData(provider) {
@@ -97,32 +99,24 @@
 
     function initFB() {
       var promises = [];
-      promises.push($http.get("/fb/me").success(function(me){
-      }));
-      promises.push($http.get("/fb/friends").success(function(friends){
-      }));
-      promises.push($http.get("/fb/statuses").success(function(statuses){
-      }));
-      $q.all(promises).then(function(resList){
+      promises.push($http.get("/fb/me").success(function (me) {}));
+      promises.push($http.get("/fb/friends").success(function (friends) {}));
+      promises.push($http.get("/fb/statuses").success(function (statuses) {}));
+      $q.all(promises).then(function (resList) {
         var me = resList[0].data;
         var friends = resList[1].data.data;
         var statuses = resList[2].data.data;
-        
+        console.log(resList);
+
         $scope.fb = me;
         analyzeFriends(friends, me);
         analyzeStatuses(statuses);
-        
+
       });
     }
 
     function initTW(numTweets) {
-      $http.get('/tw/mentions').success(function(data){
-        $scope.mentions = data;
-      });
-      $http.get('/tw/homeTweets').success(function(data){
-        $scope.homeTweets = data;
-      });
-      $http.get('/tw/userTweets').success(function(data){
+      $http.get('/tw/userTweets/' + $scope.tweetUser).success(function (data) {
         $scope.tweets = data;
       });
     }

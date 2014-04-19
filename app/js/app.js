@@ -5,6 +5,7 @@
 
   angular.module('myApp', [
   'ngRoute',
+  'ngCookies',
   'ui.bootstrap.tabs',
   'myApp.controllers',
   'myApp.filters',
@@ -19,9 +20,11 @@
       when('/', {
         templateUrl: 'template/login.html',
         controller: 'MainCtrl'
-      }).otherwise({redirectTo:'/'});
+      }).otherwise({
+        redirectTo: '/'
+      });
 
-//      $locationProvider.html5Mode(true);
+      //      $locationProvider.html5Mode(true);
     });
 
 }());

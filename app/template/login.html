@@ -12,17 +12,25 @@
   <h2 ng-if="loggedIn('twitter') && loggedIn('facebook')">
     Hello, {{ fb.first_name }}. Here are your data.
   </h2>
-  <button ng-if="!loggedIn('twitter')" class="btn btn-sm btn-primary" ng-click="signin('twitter')">Login to Twitter</button>
-  <button ng-if="loggedIn('twitter')" class="btn btn-sm btn-danger" ng-click="logout('twitter')">Logout of Twitter</button>
-  <button ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Login to Facebook</button>
-  <button ng-if="loggedIn('facebook')" class="btn btn-sm btn-danger" ng-click="logout('facebook')">Logout of Facebook</button>
+  <div ng-if="!loggedIn('twitter')">
+    <div class="row">
+      <div class="col-sm-3">
+        <input class="form-control" type="text" ng-model="tweetUser" placeholder="Username">
+      </div>
+      <div class="col-sm-9">
+        <button class="btn btn-sm btn-primary" ng-click="signin('twitter')">Login to Twitter</button>
+      </div>
+    </div>
+  </div>
+
+
+  <a ng-href="/auth/facebook" ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Login to Facebook</a>
 </div>
-<a href="/auth/facebook" class="btn btn-warning">TEST</a>
-<button ng-click="testFB()">TEST FB</button>
-<div ng-if="loggedIn('twitter') || loggedIn('facebook') || true">
+
+<div ng-if="loggedIn('twitter') || loggedIn('facebook')">
   <div class="main">
     <tabset>
-      <tab heading="Profile" ng-if="loggedIn('facebook') || true">
+      <tab heading="Profile" ng-if="loggedIn('facebook')">
         <dl class="dl-horizontal">
           <dt>Name</dt>
           <dd>{{ fb.name }}</dd>
@@ -43,7 +51,7 @@
         </dl>
       </tab>
 
-      <tab heading="Friends" ng-if="loggedIn('facebook') || true">
+      <tab heading="Friends" ng-if="loggedIn('facebook')">
         <div class="row">
           <strong class="col-sm-3">Number of Friends</strong>
           <p class="col-sm-9" ng-bind="numFriends"></p>
@@ -66,7 +74,7 @@
         </div>
       </tab>
 
-      <tab heading="Statuses" ng-if="loggedIn('facebook') || true">
+      <tab heading="Statuses" ng-if="loggedIn('facebook')">
         <div class="row">
           <strong class="col-sm-3">Average Status Length in characters</strong>
           <p class="col-sm-9" ng-bind="avgLen | number:2"></p>
@@ -86,37 +94,12 @@
 
       </tab>
 
-      <tab heading="Twitter" ng-if="loggedIn('twitter') || true">
-        <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-3 control-label">Number of tweets to retrive</label>
-            <div class="col-sm-1">
-              <input type='number' ng-model="numTweets" class="form-control">
-            </div>
-            <div class="col-sm-2">
-              <button class='btn btn-small btn-default' ng-click="getTweets(numTweets)">Get</button>
-            </div>
-          </div>
-        </form>
+      <tab heading="Twitter" ng-if="loggedIn('twitter')">
         <div class="panel panel-default">
-          <div class="panel-heading">Here are your {{ actualNum }} latest tweets</div>
+          <div class="panel-heading">Here are your 20 latest tweets</div>
 
           <ul class="list-group">
             <li class="list-group-item" ng-repeat="t in tweets" ng-bind="t.text"></li>
-          </ul>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">Here are your timeline's {{ actualNum }} latest tweets</div>
-
-          <ul class="list-group">
-            <li class="list-group-item" ng-repeat="t in homeTweets" ng-bind="t.text"></li>
-          </ul>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">Here are your {{ actualNum }} latest mentioned tweets</div>
-
-          <ul class="list-group">
-            <li class="list-group-item" ng-repeat="t in mentions" ng-bind="t.text"></li>
           </ul>
         </div>
       </tab>

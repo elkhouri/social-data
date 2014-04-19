@@ -31,9 +31,9 @@ app.get('/fb/me', fb.me);
 app.get('/fb/friends', fb.friends);
 app.get('/fb/statuses', fb.statuses);
 
-app.get('/tw/mentions', tw.mentions);
-app.get('/tw/homeTweets', tw.homeTweets);
-app.get('/tw/userTweets', tw.userTweets);
+app.get('/tw/mentions/:name', tw.mentions);
+app.get('/tw/homeTweets/:name', tw.homeTweets);
+app.get('/tw/userTweets/:name', tw.userTweets);
 
 app.post('/', function (req, res) {
   res.redirect('/');

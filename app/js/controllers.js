@@ -161,8 +161,8 @@
         var posts = resList[3].data;
 
         $scope.fb = me;
-        analyzeFriends(friends, me);
-        analyzeStatuses(statuses);
+//        analyzeFriends(friends, me);
+//        analyzeStatuses(statuses);
         analyzePosts(posts);
       });
     }

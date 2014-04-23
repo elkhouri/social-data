@@ -93,19 +93,62 @@
       $scope.avgPerDay = statuses.length / ((firstTime - lastTime) / 1000 / 60 / 60 / 24);
     }
 
+    function analyzePosts(posts) {
+      var nodes = [];
+      var links = [];
+
+      nodes.push({
+        name: "YOU",
+        group: 1
+      });
+      posts.forEach(function (post, i) {
+
+        if ("likes" in post) {
+//          console.log(post);
+          post.likes.data.forEach(function (like, j) {
+            nodes.push({
+              name: like.name,
+              group: 1
+            });
+            var friendIndex;
+            nodes.some(function (node, n) {
+              if (node.name === like.name) {
+                friendIndex = n;
+                return true;
+              }
+            });
+            links.push({
+              source: friendIndex,
+              target: 0,
+              value: 1
+            });
+
+//            console.log(like);
+          });
+        }
+      });
+      console.log(nodes);
+      console.log(links);
+      doGraph(nodes, links);
+    }
+
     function initFB() {
       var promises = [];
       promises.push($http.get("/fb/me").success(function (me) {}));
       promises.push($http.get("/fb/friends").success(function (friends) {}));
       promises.push($http.get("/fb/statuses").success(function (statuses) {}));
+      promises.push($http.get("/fb/posts").success(function (statuses) {}));
       $q.all(promises).then(function (resList) {
         var me = resList[0].data;
         var friends = resList[1].data.data;
-        var statuses = resList[2].data.data;
+        var statuses = resList[2].data;
+        var posts = resList[3].data.data;
+        //        console.log(posts);
 
         $scope.fb = me;
-        analyzeFriends(friends, me);
-        analyzeStatuses(statuses);
+        //        analyzeFriends(friends, me);
+        //        analyzeStatuses(statuses);
+        analyzePosts(posts);
       });
     }
 
@@ -121,6 +164,74 @@
       s = s.replace(/[ ]{2,}/gi, " "); //2 or more space to 1
       s = s.replace(/\n /, "\n"); // exclude newline with a start spacing
       return s.split(' ').length;
+    }
+
+    function doGraph (nodes, links) {
+      var width = 960,
+        height = 500;
+
+      var color = d3.scale.category20();
+
+      var force = d3.layout.force()
+        .charge(-120)
+        .linkDistance(30)
+        .size([width, height]);
+
+      var svg = d3.select("#graph")
+        .attr("width", width)
+        .attr("height", height);
+
+
+        force
+          .nodes(nodes)
+          .links(links)
+          .start();
+
+        var link = svg.selectAll(".link")
+          .data(links)
+          .enter().append("line")
+          .attr("class", "link")
+          .style("stroke-width", function (d) {
+            return Math.sqrt(d.value);
+          });
+
+        var node = svg.selectAll(".node")
+          .data(nodes)
+          .enter().append("circle")
+          .attr("class", "node")
+          .attr("r", 5)
+          .style("fill", function (d) {
+            return color(d.group);
+          })
+          .call(force.drag);
+
+        node.append("title")
+          .text(function (d) {
+            return d.name;
+          });
+
+        force.on("tick", function () {
+          link.attr("x1", function (d) {
+            return d.source.x;
+          })
+            .attr("y1", function (d) {
+              return d.source.y;
+            })
+            .attr("x2", function (d) {
+              return d.target.x;
+            })
+            .attr("y2", function (d) {
+              return d.target.y;
+            });
+
+          node.attr("cx", function (d) {
+            return d.x;
+          })
+            .attr("cy", function (d) {
+              return d.y;
+            });
+        });
+
     }
 
   });

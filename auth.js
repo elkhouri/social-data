@@ -15,7 +15,7 @@ var host = process.env.host;
 var conf = {
   client_id: client_id,
   client_secret: client_secret,
-  scope: 'email, user_about_me, user_birthday, user_location, publish_stream',
+  scope: 'email, user_about_me, user_birthday, user_location, read_stream',
   redirect_uri: host+'/auth/facebook'
 };
 

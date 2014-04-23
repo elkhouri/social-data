@@ -93,18 +93,82 @@
       $scope.avgPerDay = statuses.length / ((firstTime - lastTime) / 1000 / 60 / 60 / 24);
     }
 
+    var nodes = [];
+    var links = [];
+
     function analyzePosts(posts) {
-      var nodes = [];
-      var links = [];
+
 
       nodes.push({
         name: "YOU",
         group: 1
       });
-      posts.forEach(function (post, i) {
+      posts.data.forEach(function (post, i) {
 
         if ("likes" in post) {
-//          console.log(post);
+          //          console.log(post);
+          post.likes.data.forEach(function (like, j) {
+            var friendIndex = -1;
+            nodes.some(function (node, n) {
+              if (node.name === like.name) {
+                friendIndex = n;
+                return true;
+              }
+            });
+            if (friendIndex === -1) {
+              nodes.push({
+                name: like.name,
+                group: 1
+              });
+              nodes.some(function (node, n) {
+                if (node.name === like.name) {
+                  friendIndex = n;
+                  return true;
+                }
+              });
+            }
+
+
+            //            console.log(links);
+            var friendLink = links.filter(function (link) {
+              return link.source === friendIndex;
+            });
+            console.log(friendLink);
+
+            if (friendLink.length) {
+              friendLink.value += 1;
+            } else {
+              links.push({
+                source: friendIndex,
+                target: 0,
+                value: 1
+              });
+            }
+            //            console.log(like);
+          });
+        }
+      });
+      //      for (var i = 0; i < 1; i++) {
+      $http.get(posts.paging.next).success(function (data) {
+        //        analyzeMorePosts(data);
+      });
+      //      }
+      console.log(nodes);
+      console.log(links);
+            doGraph(nodes, links);
+    }
+
+    function analyzeMorePosts(posts) {
+
+
+      nodes.push({
+        name: "YOU",
+        group: 1
+      });
+      posts.data.forEach(function (post, i) {
+
+        if ("likes" in post) {
+          //          console.log(post);
           post.likes.data.forEach(function (like, j) {
             nodes.push({
               name: like.name,
@@ -117,16 +181,28 @@
                 return true;
               }
             });
-            links.push({
-              source: friendIndex,
-              target: 0,
-              value: 1
+            var friendLink = links.filter(function (link) {
+              return link.source === friendIndex;
             });
 
-//            console.log(like);
+            if (friendLink.length) {
+              friendLink.value += 2;
+            } else {
+              links.push({
+                source: friendIndex,
+                target: 0,
+                value: 1
+              });
+            }
+            //            console.log(like);
           });
         }
       });
+      //      for (var i = 0; i < 1; i++) {
+      $http.get(posts.paging.next).success(function (data) {
+        //          analyzePosts(data);
+      });
+      //      }
       console.log(nodes);
       console.log(links);
       doGraph(nodes, links);
@@ -142,7 +218,7 @@
         var me = resList[0].data;
         var friends = resList[1].data.data;
         var statuses = resList[2].data;
-        var posts = resList[3].data.data;
+        var posts = resList[3].data;
         //        console.log(posts);
 
         $scope.fb = me;
@@ -166,7 +242,7 @@
       return s.split(' ').length;
     }
 
-    function doGraph (nodes, links) {
+    function doGraph(nodes, links) {
       var width = 960,
         height = 500;
 
@@ -182,55 +258,55 @@
         .attr("height", height);
 
 
-        force
-          .nodes(nodes)
-          .links(links)
-          .start();
+      force
+        .nodes(nodes)
+        .links(links)
+        .start();
 
-        var link = svg.selectAll(".link")
-          .data(links)
-          .enter().append("line")
-          .attr("class", "link")
-          .style("stroke-width", function (d) {
-            return Math.sqrt(d.value);
-          });
-
-        var node = svg.selectAll(".node")
-          .data(nodes)
-          .enter().append("circle")
-          .attr("class", "node")
-          .attr("r", 5)
-          .style("fill", function (d) {
-            return color(d.group);
-          })
-          .call(force.drag);
-
-        node.append("title")
-          .text(function (d) {
-            return d.name;
-          });
-
-        force.on("tick", function () {
-          link.attr("x1", function (d) {
-            return d.source.x;
-          })
-            .attr("y1", function (d) {
-              return d.source.y;
-            })
-            .attr("x2", function (d) {
-              return d.target.x;
-            })
-            .attr("y2", function (d) {
-              return d.target.y;
-            });
-
-          node.attr("cx", function (d) {
-            return d.x;
-          })
-            .attr("cy", function (d) {
-              return d.y;
-            });
+      var link = svg.selectAll(".link")
+        .data(links)
+        .enter().append("line")
+        .attr("class", "link")
+        .style("stroke-width", function (d) {
+          return Math.sqrt(d.value);
         });
+
+      var node = svg.selectAll(".node")
+        .data(nodes)
+        .enter().append("circle")
+        .attr("class", "node")
+        .attr("r", 5)
+        .style("fill", function (d) {
+          return color(d.group);
+        })
+        .call(force.drag);
+
+      node.append("title")
+        .text(function (d) {
+          return d.name;
+        });
+
+      force.on("tick", function () {
+        link.attr("x1", function (d) {
+          return d.source.x;
+        })
+          .attr("y1", function (d) {
+            return d.source.y;
+          })
+          .attr("x2", function (d) {
+            return d.target.x;
+          })
+          .attr("y2", function (d) {
+            return d.target.y;
+          });
+
+        node.attr("cx", function (d) {
+          return d.x;
+        })
+          .attr("cy", function (d) {
+            return d.y;
+          });
+      });
 
     }
 

@@ -24,7 +24,7 @@ exports.statuses = function (req, res) {
 
 exports.posts = function (req, res) {
   fb.get("me/posts", function (err, reply) {
-//    console.log(reply);
+    console.log(reply);
     res.send(reply);
   });
 };

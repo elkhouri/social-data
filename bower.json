@@ -11,6 +11,6 @@
     "angular-cookies": "latest",
     "angular-bootstrap": "latest",
     "bootstrap": "latest",
-    "oauth.io": "latest"
+    "lodash": "latest"
   }
 }

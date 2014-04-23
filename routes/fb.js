@@ -23,8 +23,8 @@ exports.statuses = function (req, res) {
 };
 
 exports.posts = function (req, res) {
-  fb.get("me/posts", function (err, reply) {
-    console.log(reply);
+  fb.get("me/posts?limit=200", function (err, reply) {
+//    console.log(reply);
     res.send(reply);
   });
 };

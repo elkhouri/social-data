@@ -97,8 +97,6 @@
     var links = [];
 
     function analyzePosts(posts) {
-
-
       nodes.push({
         name: "YOU",
         group: 1
@@ -106,7 +104,6 @@
       posts.data.forEach(function (post, i) {
 
         if ("likes" in post) {
-          //          console.log(post);
           post.likes.data.forEach(function (like, j) {
             var friendIndex = -1;
             nodes.some(function (node, n) {
@@ -128,15 +125,12 @@
               });
             }
 
-
-            //            console.log(links);
-            var friendLink = links.filter(function (link) {
-              return link.source === friendIndex;
+            var sourceIndex = _.findIndex(links, {
+              'source': friendIndex
             });
-            console.log(friendLink);
 
-            if (friendLink.length) {
-              friendLink.value += 1;
+            if (sourceIndex > -1) {
+              links[sourceIndex].value += 10;
             } else {
               links.push({
                 source: friendIndex,
@@ -144,65 +138,11 @@
                 value: 1
               });
             }
-            //            console.log(like);
+
           });
         }
       });
-      //      for (var i = 0; i < 1; i++) {
-      $http.get(posts.paging.next).success(function (data) {
-        //        analyzeMorePosts(data);
-      });
-      //      }
-      console.log(nodes);
-      console.log(links);
-            doGraph(nodes, links);
-    }
 
-    function analyzeMorePosts(posts) {
-
-
-      nodes.push({
-        name: "YOU",
-        group: 1
-      });
-      posts.data.forEach(function (post, i) {
-
-        if ("likes" in post) {
-          //          console.log(post);
-          post.likes.data.forEach(function (like, j) {
-            nodes.push({
-              name: like.name,
-              group: 1
-            });
-            var friendIndex;
-            nodes.some(function (node, n) {
-              if (node.name === like.name) {
-                friendIndex = n;
-                return true;
-              }
-            });
-            var friendLink = links.filter(function (link) {
-              return link.source === friendIndex;
-            });
-
-            if (friendLink.length) {
-              friendLink.value += 2;
-            } else {
-              links.push({
-                source: friendIndex,
-                target: 0,
-                value: 1
-              });
-            }
-            //            console.log(like);
-          });
-        }
-      });
-      //      for (var i = 0; i < 1; i++) {
-      $http.get(posts.paging.next).success(function (data) {
-        //          analyzePosts(data);
-      });
-      //      }
       console.log(nodes);
       console.log(links);
       doGraph(nodes, links);
@@ -219,11 +159,10 @@
         var friends = resList[1].data.data;
         var statuses = resList[2].data;
         var posts = resList[3].data;
-        //        console.log(posts);
 
         $scope.fb = me;
-        //        analyzeFriends(friends, me);
-        //        analyzeStatuses(statuses);
+        analyzeFriends(friends, me);
+        analyzeStatuses(statuses);
         analyzePosts(posts);
       });
     }

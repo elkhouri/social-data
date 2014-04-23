@@ -161,8 +161,8 @@
         var posts = resList[3].data;
 
         $scope.fb = me;
-//        analyzeFriends(friends, me);
-//        analyzeStatuses(statuses);
+        //        analyzeFriends(friends, me);
+        //        analyzeStatuses(statuses);
         analyzePosts(posts);
       });
     }
@@ -218,6 +218,8 @@
         .style("fill", function (d) {
           return color(d.group);
         })
+        .on("click", click)
+        .on("dblclick", dblclick)
         .call(force.drag);
 
       node.append("title")
@@ -246,6 +248,36 @@
             return d.y;
           });
       });
+
+      // action to take on mouse click
+      function click() {
+        d3.select(this).select("text").transition()
+          .duration(750)
+          .attr("x", 22)
+          .style("fill", "steelblue")
+          .style("stroke", "lightsteelblue")
+          .style("stroke-width", ".5px")
+          .style("font", "20px sans-serif");
+        d3.select(this).select("circle").transition()
+          .duration(750)
+          .attr("r", 16)
+          .style("fill", "lightsteelblue");
+      }
+
+      // action to take on mouse double click
+      function dblclick() {
+        d3.select(this).select("circle").transition()
+          .duration(750)
+          .attr("r", 6)
+          .style("fill", "#ccc");
+        d3.select(this).select("text").transition()
+          .duration(750)
+          .attr("x", 12)
+          .style("stroke", "none")
+          .style("fill", "black")
+          .style("stroke", "none")
+          .style("font", "10px sans-serif");
+      }
 
     }
 

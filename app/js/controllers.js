@@ -101,6 +101,7 @@
         name: "YOU",
         group: 1
       });
+        
       posts.data.forEach(function (post, i) {
 
         if ("likes" in post) {
@@ -112,11 +113,13 @@
                 return true;
               }
             });
+              
             if (friendIndex === -1) {
               nodes.push({
                 name: like.name,
                 group: 1
               });
+                
               nodes.some(function (node, n) {
                 if (node.name === like.name) {
                   friendIndex = n;
@@ -196,7 +199,6 @@
         .attr("width", width)
         .attr("height", height);
 
-
       force
         .nodes(nodes)
         .links(links)
@@ -251,32 +253,18 @@
 
       // action to take on mouse click
       function click() {
-        d3.select(this).select("text").transition()
+        d3.select(this).transition()
           .duration(750)
-          .attr("x", 22)
-          .style("fill", "steelblue")
-          .style("stroke", "lightsteelblue")
-          .style("stroke-width", ".5px")
-          .style("font", "20px sans-serif");
-        d3.select(this).select("circle").transition()
-          .duration(750)
-          .attr("r", 16)
-          .style("fill", "lightsteelblue");
+          .attr("r", 20)
+          .style("fill", "red");
       }
 
       // action to take on mouse double click
       function dblclick() {
-        d3.select(this).select("circle").transition()
+        d3.select(this).transition()
           .duration(750)
-          .attr("r", 6)
+          .attr("r", 10)
           .style("fill", "#ccc");
-        d3.select(this).select("text").transition()
-          .duration(750)
-          .attr("x", 12)
-          .style("stroke", "none")
-          .style("fill", "black")
-          .style("stroke", "none")
-          .style("font", "10px sans-serif");
       }
 
     }

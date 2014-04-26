@@ -4,8 +4,7 @@
   var app = angular.module('myApp.controllers', []);
 
   app.controller('MainCtrl', function ($scope, $http, $q, $routeParams, $cookies) {
-    var me = {};
-    var authenticated = $routeParams.auth;
+    var auth = {};
 
     $scope.fb = {};
     $scope.error = {};
@@ -25,28 +24,32 @@
     $scope.graphLoaded = false;
     $scope.statsLoaded = false;
 
-    if(authenticated){
-      me.facebook = true;
-      initFB();
-    }
-
-    $scope.signin = function (provider, user) {
-      me[provider] = true;
-      if (provider === "twitter")
-        me[provider] = user;
-      initData(provider);
-    };
-
     $scope.loggedIn = function (provider) {
-      return me[provider];
+      //return sessionStorage.getItem(provider);
+      return auth[provider];
     };
 
-    function initData(provider) {
-      if (provider === "facebook")
-        initFB();
-      if (provider === "twitter")
-        initTW($scope.numTweets);
+    function checkStatus(){
+      $http.get('/auth').success(function(data){
+        if(data.facebook){
+          auth.facebook = true;
+          initFB();
+        }
+        if(data.twitter){
+          auth.twitter = true;
+          initTW($scope.numTweets);
+        }
+      });
     }
+    checkStatus();
+
+//    function initData() {
+//      if (sessionStorage.getItem("facebook"))
+//        initFB();
+//      if (sessionStorage.getItem("twitter"))
+//        initTW($scope.numTweets);
+//    }
+//    initData();
 
     function analyzeFriends(friends, me) {
       $scope.fb = me;

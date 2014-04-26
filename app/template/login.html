@@ -12,19 +12,9 @@
   <h2 ng-if="loggedIn('twitter') && loggedIn('facebook')">
     Hello, {{ fb.first_name }}. Here are your data.
   </h2>
-  <div ng-if="!loggedIn('twitter')">
-    <div class="row">
-      <div class="col-sm-3">
-        <input class="form-control" type="text" ng-model="tweetUser" placeholder="Username">
-      </div>
 
-      <div class="col-sm-9">
-        <button class="btn btn-sm btn-primary" ng-click="signin('twitter',tweetUser)">Login to Twitter</button>
-      </div>
-    </div>
-  </div>
-
-  <a ng-href="/auth/facebook" ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Login to Facebook</a>
+  <a ng-href="/auth/facebook" ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary">Login to Facebook</a>
+  <a ng-href="/auth/twitter" ng-if="!loggedIn('twitter')" class="btn btn-sm btn-primary">Login to Twitter</a>
 </div>
 
 <div ng-if="loggedIn('twitter') || loggedIn('facebook')">

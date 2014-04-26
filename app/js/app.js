@@ -14,11 +14,9 @@
   ])
     .config(function ($routeProvider, $locationProvider) {
       $routeProvider
-        .when('/:auth?', {
+        .when('/', {
           templateUrl: 'template/login.html',
           controller: 'MainCtrl'
-        }).otherwise({
-          redirectTo: '/'
         })
         .otherwise({
           redirectTo: '/'

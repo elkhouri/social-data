@@ -6,17 +6,34 @@ var session = require('express-session');
 
 app.set('port', process.env.PORT || 3000);
 
-app.get('/app/*', function (req, res) {
-  res.sendfile('app/' + req.originalUrl.substr(5));
-});
+
 
 app.use(cookieParser());
-app.use(session({secret:'VkJAYDl3gNDaKp73H7pC'}));
-app.use(express.static(path.join(__dirname, 'app')));
+app.use(session({
+  secret: 'VkJAYDl3gNDaKp73H7pC'
+}));
+
 
 var auth = require('./auth');
 var fb = require('./routes/fb');
 var tw = require('./routes/tw');
+
+app.use(function (req, res, next) {
+  var fb = req.session.facebook || false;
+  var tw = req.session.twitter || false;
+
+  res.cookie('facebook', fb, {
+    maxAge: 900000,
+    httpOnly: false
+  });
+  res.cookie('twitter', tw, {
+    maxAge: 900000,
+    httpOnly: false
+  });
+  next();
+});
+
+app.use(express.static(path.join(__dirname, 'app')));
 
 app.get('/auth/facebook', auth.fb);
 app.get('/auth/twitter', auth.tw);

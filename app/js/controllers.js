@@ -3,9 +3,7 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, $q, $routeParams) {
-    var auth = {};
-
+  app.controller('MainCtrl', function ($scope, $http, $q, $routeParams, $cookieStore) {
     $scope.fb = {};
     $scope.error = {};
     $scope.userTweets = {};
@@ -23,20 +21,16 @@
     $scope.statsLoaded = false;
 
     $scope.loggedIn = function (provider) {
-      return auth[provider];
+      return $cookieStore.get(provider);
     };
 
-    function checkStatus(){
-      $http.get('/auth').success(function(data){
-        if(data.facebook){
-          auth.facebook = true;
-          initFB();
-        }
-        if(data.twitter){
-          auth.twitter = true;
-          initTW();
-        }
-      });
+    function checkStatus() {
+      if ($cookieStore.get('facebook')) {
+        initFB();
+      }
+      if ($cookieStore.get('twitter')) {
+        initTW();
+      }
     }
     checkStatus();
 
@@ -110,7 +104,7 @@
 
             var sourceIndex = _.findIndex(links, {
               'source': friendIndex
-            });  
+            });
 
             if (sourceIndex > -1) {
               links[sourceIndex].value += 10;
@@ -156,7 +150,7 @@
       promises.push($http.get('/tw/userTweets/'));
       promises.push($http.get('/tw/homeTweets/'));
       promises.push($http.get('/tw/mentions/'));
-      $q.all(promises).then(function(resList){
+      $q.all(promises).then(function (resList) {
         $scope.userTweets = resList[0].data;
         $scope.homeTweets = resList[1].data;
         $scope.mentions = resList[2].data;

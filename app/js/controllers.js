@@ -101,7 +101,7 @@
         name: "YOU",
         group: 1
       });
-        
+
       posts.data.forEach(function (post, i) {
 
         if ("likes" in post) {
@@ -113,13 +113,13 @@
                 return true;
               }
             });
-              
+
             if (friendIndex === -1) {
               nodes.push({
                 name: like.name,
                 group: 1
               });
-                
+
               nodes.some(function (node, n) {
                 if (node.name === like.name) {
                   friendIndex = n;
@@ -160,12 +160,12 @@
       $q.all(promises).then(function (resList) {
         var me = resList[0].data;
         var friends = resList[1].data.data;
-        var statuses = resList[2].data;
+        var statuses = resList[2].data.data;
         var posts = resList[3].data;
 
         $scope.fb = me;
-        //        analyzeFriends(friends, me);
-        //        analyzeStatuses(statuses);
+        analyzeFriends(friends, me);
+        analyzeStatuses(statuses);
         analyzePosts(posts);
       });
     }

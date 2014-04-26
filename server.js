@@ -31,26 +31,9 @@ app.get('/fb/friends', fb.friends);
 app.get('/fb/statuses', fb.statuses);
 app.get('/fb/posts', fb.posts);
 
-app.get('/tw/mentions/:name', tw.mentions);
-app.get('/tw/homeTweets/:name', tw.homeTweets);
-app.get('/tw/userTweets/:name', tw.userTweets);
-
-app.post('/', function (req, res) {
-  res.redirect('/');
-});
-
-auth.graph.get("/me/statuses", function (err, reply) {
-  console.log(reply);
-  //  res.send(reply);
-});
-auth.graph.get("/me/friends?fields=name,birthday,education,languages,location,gender", function (err, reply) {
-  console.log(reply);
-  //  res.send(reply);
-});
-auth.graph.get("/me", function (err, reply) {
-  console.log(reply);
-  //  res.send(reply);
-});
+app.get('/tw/mentions', tw.mentions);
+app.get('/tw/homeTweets', tw.homeTweets);
+app.get('/tw/userTweets', tw.userTweets);
 
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Express server listening on port ' + app.get('port'));

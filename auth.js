@@ -102,7 +102,6 @@ exports.fb = function (req, res) {
     "client_secret": conf.client_secret,
     "code": req.query.code
   }, function (err, facebookRes) {
-    console.log(facebookRes);
     req.session.facebook = true;
     res.redirect('/');
   });

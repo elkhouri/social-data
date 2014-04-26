@@ -8,7 +8,7 @@
 
     $scope.fb = {};
     $scope.error = {};
-    $scope.tweets = {};
+    $scope.userTweets = {};
     $scope.homeTweets = {};
     $scope.mentions = {};
     $scope.tweetUser = '';
@@ -25,7 +25,6 @@
     $scope.statsLoaded = false;
 
     $scope.loggedIn = function (provider) {
-      //return sessionStorage.getItem(provider);
       return auth[provider];
     };
 
@@ -37,19 +36,11 @@
         }
         if(data.twitter){
           auth.twitter = true;
-          initTW($scope.numTweets);
+          initTW();
         }
       });
     }
     checkStatus();
-
-//    function initData() {
-//      if (sessionStorage.getItem("facebook"))
-//        initFB();
-//      if (sessionStorage.getItem("twitter"))
-//        initTW($scope.numTweets);
-//    }
-//    initData();
 
     function analyzeFriends(friends, me) {
       $scope.fb = me;
@@ -144,10 +135,10 @@
 
     function initFB() {
       var promises = [];
-      promises.push($http.get("/fb/me").success(function (me) {}));
-      promises.push($http.get("/fb/friends").success(function (friends) {}));
-      promises.push($http.get("/fb/statuses").success(function (statuses) {}));
-      promises.push($http.get("/fb/posts").success(function (statuses) {}));
+      promises.push($http.get("/fb/me"));
+      promises.push($http.get("/fb/friends"));
+      promises.push($http.get("/fb/statuses"));
+      promises.push($http.get("/fb/posts"));
       $q.all(promises).then(function (resList) {
         var me = resList[0].data;
         var friends = resList[1].data.data;
@@ -162,9 +153,17 @@
       });
     }
 
-    function initTW(user) {
-      $http.get('/tw/userTweets/' + $cookies.twitter).success(function (data) {
-        $scope.tweets = data;
+    function initTW() {
+      var promises = [];
+      promises.push($http.get('/tw/userTweets/'));
+      promises.push($http.get('/tw/homeTweets/'));
+      promises.push($http.get('/tw/mentions/'));
+      $q.all(promises).then(function(resList){
+        $scope.userTweets = resList[0].data;
+        $scope.homeTweets = resList[1].data;
+        $scope.mentions = resList[2].data;
+
+        $scope.twitterLoaded = true;
       });
     }
 

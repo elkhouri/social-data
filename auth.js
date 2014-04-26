@@ -45,7 +45,7 @@ exports.fb = function (req, res) {
     "code": req.query.code
   }, function (err, facebookRes) {
     console.log(facebookRes);
-    res.redirect('/');
+    res.redirect('#/true');
   });
 };
 

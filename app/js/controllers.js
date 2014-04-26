@@ -3,8 +3,10 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, $q, $location, $cookies) {
+  app.controller('MainCtrl', function ($scope, $http, $q, $routeParams, $cookies) {
     var me = {};
+    var authenticated = $routeParams.auth;
+
     $scope.fb = {};
     $scope.error = {};
     $scope.tweets = {};
@@ -23,23 +25,20 @@
     $scope.graphLoaded = false;
     $scope.statsLoaded = false;
 
-    if ($cookies.facebook)
+    if(authenticated){
+      me.facebook = true;
       initFB();
-    if ($cookies.twitter) {
-      $scope.tweetUser = $cookies.twitter;
-      initTW(5);
     }
 
     $scope.signin = function (provider, user) {
       me[provider] = true;
-      $cookies[provider] = true;
       if (provider === "twitter")
-        $cookies[provider] = user;
+        me[provider] = user;
       initData(provider);
     };
 
     $scope.loggedIn = function (provider) {
-      return me[provider] || $cookies[provider];
+      return me[provider];
     };
 
     function initData(provider) {

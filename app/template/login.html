@@ -24,7 +24,6 @@
     </div>
   </div>
 
-
   <a ng-href="/auth/facebook" ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary" ng-click="signin('facebook')">Login to Facebook</a>
 </div>
 
@@ -32,7 +31,8 @@
   <div class="main">
     <tabset>
       <tab heading="Profile" ng-if="loggedIn('facebook')">
-        <dl class="dl-horizontal">
+        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
+        <dl ng-show="statsLoaded" class="dl-horizontal">
           <dt>Name</dt>
           <dd>{{ fb.name }}</dd>
           <dt>Birthday</dt>
@@ -53,46 +53,51 @@
       </tab>
 
       <tab heading="Friends" ng-if="loggedIn('facebook')">
-        <div class="row">
-          <strong class="col-sm-3">Number of Friends</strong>
-          <p class="col-sm-9" ng-bind="numFriends"></p>
-        </div>
-        <div class="row">
-          <strong class="col-sm-3">Number of Friends with same birthday month</strong>
-          <p class="col-sm-9" ng-bind="sameBDay"></p>
-        </div>
-        <div class="row">
-          <strong class="col-sm-3">Number of Friends with same gender</strong>
-          <p class="col-sm-9" ng-bind="sameGender"></p>
-        </div>
-        <div class="row">
-          <strong class="col-sm-3">Number of Friends who went to a same school</strong>
-          <p class="col-sm-9" ng-bind="sameSchool"></p>
-        </div>
-        <div class="row">
-          <strong class="col-sm-3">Number of Friends who are in the same location</strong>
-          <p class="col-sm-9" ng-bind="sameLocation"></p>
+        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
+        <div ng-show="statsLoaded">
+          <div class="row">
+            <strong class="col-sm-3">Number of Friends</strong>
+            <p class="col-sm-9" ng-bind="numFriends"></p>
+          </div>
+          <div class="row">
+            <strong class="col-sm-3">Number of Friends with same birthday month</strong>
+            <p class="col-sm-9" ng-bind="sameBDay"></p>
+          </div>
+          <div class="row">
+            <strong class="col-sm-3">Number of Friends with same gender</strong>
+            <p class="col-sm-9" ng-bind="sameGender"></p>
+          </div>
+          <div class="row">
+            <strong class="col-sm-3">Number of Friends who went to a same school</strong>
+            <p class="col-sm-9" ng-bind="sameSchool"></p>
+          </div>
+          <div class="row">
+            <strong class="col-sm-3">Number of Friends who are in the same location</strong>
+            <p class="col-sm-9" ng-bind="sameLocation"></p>
+          </div>
         </div>
       </tab>
 
       <tab heading="Statuses" ng-if="loggedIn('facebook')">
-        <div class="row">
-          <strong class="col-sm-3">Average Status Length in characters</strong>
-          <p class="col-sm-9" ng-bind="avgLen | number:2"></p>
+        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
+        <div ng-show="statsLoaded">
+          <div class="row">
+            <strong class="col-sm-3">Average Status Length in characters</strong>
+            <p class="col-sm-9" ng-bind="avgLen | number:2"></p>
+          </div>
+          <div class="row">
+            <strong class="col-sm-3">Average Status Length in words</strong>
+            <p class="col-sm-9" ng-bind="avgWordLen | number:2"></p>
+          </div>
+          <div class="row">
+            <strong class="col-sm-3">Average time in hours between each status update</strong>
+            <p class="col-sm-9" ng-bind="avgDelay | number:2"></p>
+          </div>
+          <div class="row">
+            <strong class="col-sm-3">Average number of status updates per day</strong>
+            <p class="col-sm-9" ng-bind="avgPerDay | number:2"></p>
+          </div>
         </div>
-        <div class="row">
-          <strong class="col-sm-3">Average Status Length in words</strong>
-          <p class="col-sm-9" ng-bind="avgWordLen | number:2"></p>
-        </div>
-        <div class="row">
-          <strong class="col-sm-3">Average time in hours between each status update</strong>
-          <p class="col-sm-9" ng-bind="avgDelay | number:2"></p>
-        </div>
-        <div class="row">
-          <strong class="col-sm-3">Average number of status updates per day</strong>
-          <p class="col-sm-9" ng-bind="avgPerDay | number:2"></p>
-        </div>
-
       </tab>
 
       <tab heading="Twitter" ng-if="loggedIn('twitter')">
@@ -104,11 +109,12 @@
           </ul>
         </div>
       </tab>
-      
+
       <tab heading="Graph">
+        <h4 ng-show="!graphLoaded">Loading Graph...</h4>
         <svg id="graph"></svg>
       </tab>
     </tabset>
-    <svg id="graph1"></svg>
+
   </div>
 </div>

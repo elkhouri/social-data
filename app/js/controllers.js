@@ -20,7 +20,8 @@
     $scope.avgWordLen = 0;
     $scope.avgDelay = 0;
     $scope.avgPerDay = 0;
-    $scope.actualNum = $scope.numTweets;
+    $scope.graphLoaded = false;
+    $scope.statsLoaded = false;
 
     if ($cookies.facebook)
       initFB();
@@ -155,6 +156,7 @@
         analyzeFriends(friends, me);
         analyzeStatuses(statuses);
         analyzePosts(posts);
+        $scope.statsLoaded = true;
       });
     }
 
@@ -163,10 +165,9 @@
         $scope.tweets = data;
       });
     }
-    $scope.getTweets = initTW;
 
     function countWords(s) {
-      s = s.replace(/(^\s*)|(\s*$)/gi, ""); //exclude  start and end white-space
+      s = s.replace(/(^\s*)|(\s*$)/gi, ""); //exclude start and end white-space
       s = s.replace(/[ ]{2,}/gi, " "); //2 or more space to 1
       s = s.replace(/\n /, "\n"); // exclude newline with a start spacing
       return s.split(' ').length;
@@ -256,6 +257,8 @@
             return color(d.group);
           });
       }
+
+      $scope.graphLoaded = true;
 
     }
 

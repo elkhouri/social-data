@@ -1,5 +1,5 @@
-Assignment 1
+Assignment 2
 ------
 - Chih Yuan Chen
-- (No partner)
+- Natalie Avunjian
 - COGS 121 SP14

@@ -103,34 +103,22 @@
       });
 
       posts.data.forEach(function (post, i) {
-
         if ("likes" in post) {
           post.likes.data.forEach(function (like, j) {
-            var friendIndex = -1;
-            nodes.some(function (node, n) {
-              if (node.name === like.name) {
-                friendIndex = n;
-                return true;
-              }
+            var friendIndex = _.findIndex(nodes, {
+              'name': like.name
             });
 
             if (friendIndex === -1) {
-              nodes.push({
+              friendIndex = nodes.push({
                 name: like.name,
                 group: 1
-              });
-
-              nodes.some(function (node, n) {
-                if (node.name === like.name) {
-                  friendIndex = n;
-                  return true;
-                }
-              });
+              }) - 1;
             }
 
             var sourceIndex = _.findIndex(links, {
               'source': friendIndex
-            });
+            });  
 
             if (sourceIndex > -1) {
               links[sourceIndex].value += 10;
@@ -263,8 +251,10 @@
       function dblclick() {
         d3.select(this).transition()
           .duration(750)
-          .attr("r", 10)
-          .style("fill", "#ccc");
+          .attr("r", 5)
+          .style("fill", function (d) {
+            return color(d.group);
+          });
       }
 
     }

@@ -4,13 +4,10 @@ var dotenv = require('dotenv');
 var graph = require('fbgraph');
 var twit = require('twit');
 var twitterAPI = require('node-twitter-api');
-
 dotenv.load();
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
 var TWITTER_CONSUMER_SECRET = process.env.TWITTER_CONSUMER_SECRET;
-var access_token = process.env.access_token;
-var access_token_secret = process.env.access_token_secret;
 var client_id = process.env.client_id;
 var client_secret = process.env.client_secret;
 var host = process.env.host;
@@ -36,10 +33,6 @@ var T = new twit({
   access_token_secret: '...'
 });
 
-var requestToken;
-var requestTokenSecret;
-var oauth_verifier;
-
 exports.tw = function (req, res) {
   if (!req.query.oauth_verifier) {
     twitter.getRequestToken(function (error, requestToken, requestTokenSecret, results) {
@@ -52,11 +45,13 @@ exports.tw = function (req, res) {
         res.redirect('https://twitter.com/oauth/authenticate?oauth_token=' + requestToken);
       }
     });
+
+    return;
   }
 
-  requestToken = req.session.requestToken;
-  requestTokenSecret = req.session.requestTokenSecret;
-  oauth_verifier = req.query.oauth_verifier;
+  var requestToken = req.session.requestToken;
+  var requestTokenSecret = req.session.requestTokenSecret;
+  var oauth_verifier = req.query.oauth_verifier;
 
   twitter.getAccessToken(requestToken, requestTokenSecret, oauth_verifier, function (error, accessToken, accessTokenSecret, results) {
     if (error) {
@@ -88,9 +83,9 @@ exports.fb = function (req, res) {
       "scope": conf.scope
     });
 
-    if (!req.query.error) { //checks whether a user denied the app facebook login/permissions
+    if (!req.query.error) {
       res.redirect(authUrl);
-    } else { //req.query.error == 'access_denied'
+    } else {
       res.send('access denied');
     }
     return;
@@ -111,6 +106,6 @@ exports.twit = T;
 
 exports.graph = graph;
 
-exports.loggedIn = function(req, res){
+exports.loggedIn = function (req, res) {
   res.send(req.session);
 };

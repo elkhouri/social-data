@@ -3,7 +3,7 @@
 
   var app = angular.module('myApp.controllers', []);
 
-  app.controller('MainCtrl', function ($scope, $http, $q, $routeParams, $cookies) {
+  app.controller('MainCtrl', function ($scope, $http, $q, $routeParams) {
     var auth = {};
 
     $scope.fb = {};
@@ -11,8 +11,6 @@
     $scope.userTweets = {};
     $scope.homeTweets = {};
     $scope.mentions = {};
-    $scope.tweetUser = '';
-    $scope.numTweets = 5;
     $scope.sameBDay = 0;
     $scope.sameGender = 0;
     $scope.sameSchool = 0;

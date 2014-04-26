@@ -1,14 +1,17 @@
 {
-  "name": "angular-express",
-  "version": "0.0.1",
+  "name": "social-data",
+  "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "0.10.x"
+  },
   "dependencies": {
-    "express": "*",
-    "express-session": "*",
-    "cookie-parser": "*",
+    "express": "latest",
+    "express-session": "latest",
+    "cookie-parser": "latest",
     "fbgraph": "latest",
-    "dotenv": "*",
+    "dotenv": "latest",
     "twit": "latest",
-    "node-twitter-api": "*"
+    "node-twitter-api": "latest"
   }
 }

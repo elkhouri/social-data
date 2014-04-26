@@ -146,8 +146,8 @@
         }
       });
 
-      console.log(nodes);
-      console.log(links);
+//      console.log(nodes);
+//      console.log(links);
       doGraph(nodes, links);
     }
 
@@ -160,12 +160,13 @@
       $q.all(promises).then(function (resList) {
         var me = resList[0].data;
         var friends = resList[1].data.data;
-        var statuses = resList[2].data;
+        var statuses = resList[2].data.data;
         var posts = resList[3].data;
 
+        console.log(statuses);
         $scope.fb = me;
-        //        analyzeFriends(friends, me);
-        //        analyzeStatuses(statuses);
+                analyzeFriends(friends, me);
+                analyzeStatuses(statuses);
         analyzePosts(posts);
       });
     }
@@ -214,15 +215,18 @@
 
       var node = svg.selectAll(".node")
         .data(nodes)
-        .enter().append("circle")
+        .enter().append("g")
         .attr("class", "node")
-        .attr("r", 5)
-        .style("fill", function (d) {
-          return color(d.group);
-        })
         .on("click", click)
         .on("dblclick", dblclick)
         .call(force.drag);
+
+      node.append("circle")
+        .attr("r", 5)
+        .style("fill", function (d) {
+          return color(d.group);
+        });
+
 
       node.append("title")
         .text(function (d) {

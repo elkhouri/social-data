@@ -1,3 +1,5 @@
+/* jshint multistr:true */
+
 var dotenv = require('dotenv');
 var graph = require('fbgraph');
 var twit = require('twit');
@@ -15,7 +17,8 @@ var host = process.env.host;
 var conf = {
   client_id: client_id,
   client_secret: client_secret,
-  scope: 'email, user_about_me, user_birthday, user_location, read_stream',
+  scope: 'email, user_about_me, user_birthday, user_location, read_stream, \
+  user_location, friends_location, friends_birthday, friends_education_history',
   redirect_uri: host+'/auth/facebook'
 };
 

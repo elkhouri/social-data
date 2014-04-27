@@ -2,26 +2,69 @@
 .pagination,
 .carousel,
 .panel-title a {
-  cursor: pointer;
+    cursor: pointer;
 }
 .form-horizontal {
-  padding-top: 10px;
+    padding-top: 10px;
 }
 .tab-content {
- background: #eee;
+    background: #eee;
 }
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
- background: #eee;
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus {
+    background: #eee;
 }
 .jumbotron {
-  margin-top: 10px !important;
+    margin-top: 10px !important;
 }
 .node {
-  stroke: #fff;
-  stroke-width: 1.5px;
+    stroke: #fff;
+    stroke-width: 1.5px;
 }
-
 .link {
-  stroke: #999;
-  stroke-opacity: .6;
+    stroke: #999;
+    stroke-opacity: .6;
+}
+body {
+    background-color: black;
+}
+.main {
+    margin-top: 30px;
+    background-color: #ccc;
+}
+#siteBody {
+    height: 800px;
+    width: 960px;
+    margin: 0 auto;
+    background-color: #eee;
+}
+.img {
+    margin-left: 310px;
+}
+#title {
+    font-size: 65px;
+    font-family: "satisfy", sans-serif;
+    margin-left: 390px;
+}
+#index {
+    font-family: "satisfy", sans-serif;
+    margin-left: 300px;
+}
+#indextwit {
+    font-family: "satisfy", sans-serif;
+    margin-left: 245px;
+}
+#inboth {
+    font-family: "satisfy", sans-serif;
+    margin-left: 120px;
+}
+#twitbut {
+    margin-left: 250px;
+}
+#fbbut {
+    margin-left: 250px;
+}
+h4 {
+    text-align: center;
 }

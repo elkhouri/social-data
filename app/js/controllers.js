@@ -196,7 +196,7 @@
 
       var node = svg.selectAll(".node")
         .data(nodes)
-        .enter().append("circle")
+        .enter().append("svg:circle")
         .attr("class", "node")
         .attr("r", 5)
         .style("fill", function (d) {
@@ -205,6 +205,7 @@
         .on("click", click)
         .on("dblclick", dblclick)
         .call(force.drag);
+       
 
       node.append("title")
         .text(function (d) {
@@ -238,7 +239,7 @@
         d3.select(this).transition()
           .duration(750)
           .attr("r", 20)
-          .style("fill", "red");
+          .style("fill", "black");
       }
 
       // action to take on mouse double click

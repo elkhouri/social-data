@@ -1,127 +1,144 @@
-<div class="alert alert-danger" ng-if="error.text" ng-bind="error.text"></div>
-<div class="jumbotron">
-  <h2 ng-if="!loggedIn('twitter') && !loggedIn('facebook')">
-    Hello, Please Login to Facebook or Twitter
-  </h2>
-  <h2 ng-if="!loggedIn('twitter') && loggedIn('facebook')">
-    Hello, Please Login to Twitter
-  </h2>
-  <h2 ng-if="!loggedIn('facebook') && loggedIn('twitter')">
-    Hello, Please Login to Facebook
-  </h2>
-  <h2 ng-if="loggedIn('twitter') && loggedIn('facebook')">
-    Hello, {{ fb.first_name }}. Here are your data.
-  </h2>
+<html>
 
-  <a ng-href="/auth/facebook" ng-if="!loggedIn('facebook')" class="btn btn-sm btn-primary">Login to Facebook</a>
-  <a ng-href="/auth/twitter" ng-if="!loggedIn('twitter')" class="btn btn-sm btn-primary">Login to Twitter</a>
-</div>
+<head>
+    <title></title>
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="app.css" rel="stylesheet" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Fanwood+Text|Niconne|Satisfy|Bad+Script|Source+Sans+Pro|' rel='stylesheet' type='text/css'>
 
-<div ng-if="loggedIn('twitter') || loggedIn('facebook')">
-  <div class="main">
-    <tabset>
-      <tab heading="Profile" ng-if="loggedIn('facebook')">
-        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
-        <dl ng-show="statsLoaded" class="dl-horizontal">
-          <dt>Name</dt>
-          <dd>{{ fb.name }}</dd>
-          <dt>Birthday</dt>
-          <dd>{{ fb.birthday }}</dd>
-          <dt>Gender</dt>
-          <dd>{{ fb.gender }}</dd>
-          <dt>Education</dt>
-          <dd ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}</dd>
-          <dt>Languages</dt>
-          <dd ng-repeat="l in fb.languages">{{ l.name }}</dd>
-          <dt>Location</dt>
-          <dd>{{ fb.location.name }}</dd>
-          <dt>Sports</dt>
-          <dd ng-repeat="s in fb.sports">{{ s.name }}</dd>
-          <dt>Username</dt>
-          <dd>{{ fb.username }}</dd>
-        </dl>
-      </tab>
+</head>
 
-      <tab heading="Friends" ng-if="loggedIn('facebook')">
-        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
-        <div ng-show="statsLoaded">
-          <div class="row">
-            <strong class="col-sm-3">Number of Friends</strong>
-            <p class="col-sm-9" ng-bind="numFriends"></p>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">Number of Friends with same birthday month</strong>
-            <p class="col-sm-9" ng-bind="sameBDay"></p>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">Number of Friends with same gender</strong>
-            <p class="col-sm-9" ng-bind="sameGender"></p>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">Number of Friends who went to a same school</strong>
-            <p class="col-sm-9" ng-bind="sameSchool"></p>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">Number of Friends who are in the same location</strong>
-            <p class="col-sm-9" ng-bind="sameLocation"></p>
-          </div>
-        </div>
-      </tab>
+<body>
+    <div id="siteBody">
+        <div class="container">
+            <div class="row">
 
-      <tab heading="Statuses" ng-if="loggedIn('facebook')">
-        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
-        <div ng-show="statsLoaded">
-          <div class="row">
-            <strong class="col-sm-3">Average Status Length in characters</strong>
-            <p class="col-sm-9" ng-bind="avgLen | number:2"></p>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">Average Status Length in words</strong>
-            <p class="col-sm-9" ng-bind="avgWordLen | number:2"></p>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">Average time in hours between each status update</strong>
-            <p class="col-sm-9" ng-bind="avgDelay | number:2"></p>
-          </div>
-          <div class="row">
-            <strong class="col-sm-3">Average number of status updates per day</strong>
-            <p class="col-sm-9" ng-bind="avgPerDay | number:2"></p>
-          </div>
-        </div>
-      </tab>
+                <div class="alert alert-danger" ng-if="error.text" ng-bind="error.text"></div>
+                
+                <h2 id="title" ng-if="!loggedIn('twitter') && !loggedIn('facebook')"> tabkeeper </h2>
+                    <div class="img">
+                        <img ng-if="!loggedIn('twitter') && !loggedIn('facebook')" src="../css/icons.png">
+                    </div>
+                    <h2 id="index" ng-if="!loggedIn('twitter') && !loggedIn('facebook')">
+                    Please Login to Facebook or Twitter</h2>
+                <h2 id="indextwit" ng-if="!loggedIn('twitter') && loggedIn('facebook')">
+                    Login to Twitter to access your information!
+                </h2>
+                <h2 id="index" ng-if="!loggedIn('facebook') && loggedIn('twitter')">
+                    Login to Facebook to access your information!
+                </h2>
+                <h2 id="inboth" ng-if="loggedIn('twitter') && loggedIn('facebook')">
+                    Hello,
+                    <strong></strong>{{ fb.first_name }}</strong>! Explore the tabs to learn about yourself and your friends
+                </h2>
 
-      <tab heading="Twitter" ng-if="loggedIn('twitter')">
-        <h4 ng-show="!twitterLoaded">Loading Tweets...</h4>
-        <div ng-show="twitterLoaded">
-          <div class="panel panel-default">
-            <div class="panel-heading">Here are your 20 latest tweets</div>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="t in userTweets" ng-bind="t.text"></li>
-            </ul>
-          </div>
+                <a ng-href="/auth/facebook" id="fbbut" ng-if="!loggedIn('facebook')" class="btn btn-primary">Login to Facebook</a>
+                <a ng-href="/auth/twitter" id="twitbut" ng-if="!loggedIn('twitter')" class="btn btn-primary">Login to Twitter</a>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">Here are your 20 latest tweets on your timeline</div>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="t in homeTweets" ng-bind="t.text"></li>
-            </ul>
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading">Here are your 20 latest mentions</div>
-            <ul class="list-group">
-              <li class="list-group-item" ng-repeat="t in mentions" ng-bind="t.text"></li>
-            </ul>
-          </div>
+            </div>
         </div>
 
-      </tab>
+        <div ng-if="loggedIn('twitter') || loggedIn('facebook')">
+            <div class="main">
+                <div class="backdrop">
+                    <tabset>
+                        <tab heading="Profile" ng-if="loggedIn('facebook')">
+                            <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
+                            <dl ng-show="statsLoaded" class="dl-horizontal">
+                                <dt>
+                                    <br>Name</dt>
+                                <dd>
+                                    <br>{{ fb.name }}</dd>
+                                <dt>Username</dt>
+                                <dd>{{ fb.username }}</dd>
+                                <dt>Birthday</dt>
+                                <dd>{{ fb.birthday }}</dd>
+                                <dt>Gender</dt>
+                                <dd>{{ fb.gender }}</dd>
+                                <dt>Education</dt>
+                                <dd ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}</dd>
+                                <dt>Languages</dt>
+                                <dd ng-repeat="l in fb.languages">{{ l.name }}</dd>
+                                <dt>Location</dt>
+                                <dd>{{ fb.location.name }}</dd>
+                            </dl>
+                        </tab>
 
-      <tab heading="Graph">
-        <h4 ng-show="!graphLoaded">Loading Graph...</h4>
-        <svg id="graph"></svg>
-      </tab>
-    </tabset>
+                        <tab heading="Friends" ng-if="loggedIn('facebook')">
+                            <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
+                            <dl ng-show="statsLoaded" class="dl-horizontal">
+                                <h4>
+                                    <br>See the number of friends you have things in common with below!</h4>
+                                <dt>Number of Friends</dt>
+                                <dd ng-bind="numFriends"></dd>
+                                <dt>Same Birthday Month</dt>
+                                <dd ng-bind="sameBDay"></dd>
+                                <dt>Same Gender</dt>
+                                <dd ng-bind="sameGender"></dd>
+                                <dt>Same School(s)</dt>
+                                <dd ng-bind="sameSchool"></dd>
+                                <dt>Same Location</dt>
+                                <dd ng-bind="sameLocation"></dd>
+                            </dl>
+                        </tab>
+                        <tab heading="Statuses" ng-if="loggedIn('facebook')">
+                            <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
+                            <dl ng-show="statsLoaded" class="dl-horizontal">
+                                <h4>
+                                    <br>See some
+                                    <strong>
+                                        <em>averages</em>
+                                    </strong>of the statuses you post below!</h4>
+                                <dt>Status Length (chars)</dt>
+                                <dd ng-bind="avgLen | number:2"></dd>
+                                <dt>Status Length (words)</dt>
+                                <dd ng-bind="avgWordLen | number:2"></dd>
+                                <dt>Hours Between Posts</dt>
+                                <dd ng-bind="avgDelay | number:2"></dd>
+                                <dt>Posts Per Day</dt>
+                                <dd ng-bind="avgPerDay | number:2"></dd>
+                            </dl>
+                        </tab>
 
-  </div>
-</div>
+                        <tab heading="Twitter" ng-if="loggedIn('twitter')">
+                            <h4 ng-show="!twitterLoaded"><br>Loading Tweets...</h4>
+                            <div ng-show="twitterLoaded">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Here are your 20 latest tweets</div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="t in userTweets" ng-bind="t.text"></li>
+                                    </ul>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Here are your 20 latest tweets on your timeline</div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="t in homeTweets" ng-bind="t.text"></li>
+                                    </ul>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Here are your 20 latest mentions</div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="t in mentions" ng-bind="t.text"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </tab>
+
+                        <tab heading="Explore Graph">
+                            <h4 ng-show="!graphLoaded"><br>Loading Graph...</h4>
+                            <h4>
+                                <br>The graph below displays your "likers" on some of the most recent posts you've made.
+                                <br>Click or drag a circle to interact - double click to shrink it back.</h4>
+                            <svg id="graph"></svg>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+

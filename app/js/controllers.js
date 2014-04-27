@@ -120,8 +120,8 @@
         }
       });
 
-//      console.log(nodes);
-//      console.log(links);
+      console.log(nodes);
+      console.log(links);
       doGraph(nodes, links);
     }
 
@@ -170,6 +170,8 @@
       var width = 960;
       var height = 500;
       var color = d3.scale.category20();
+      var maxLikes = _.max(links, 'value').value;
+      var minLikes = _.min(links, 'value').value;
 
       var svg = d3.select("#graph")
         .attr("width", width)
@@ -177,10 +179,15 @@
 
       var force = d3.layout.force()
         .charge(-120)
-        .linkDistance(30)
         .size([width, height])
         .nodes(nodes)
         .links(links)
+        .linkDistance(function(link, i){
+          return 200 * Math.pow(link.value, -0.5);
+        })
+        .linkStrength(function(link, i){
+          return link.value / maxLikes;
+        })
         .start();
 
       var link = svg.selectAll(".link")

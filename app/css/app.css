@@ -4,9 +4,6 @@
 .panel-title a {
   cursor: pointer;
 }
-.form-horizontal {
-  padding-top: 10px;
-}
 .tab-content {
  background: #eee;
 }
@@ -16,7 +13,8 @@
 .jumbotron {
   margin-top: 10px !important;
 }
-.node {
+
+.node circle {
   stroke: #fff;
   stroke-width: 1.5px;
 }

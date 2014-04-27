@@ -167,23 +167,27 @@
     }
 
     function doGraph(nodes, links) {
-      var width = 960,
-        height = 500;
-
+      var width = 960;
+      var height = 500;
       var color = d3.scale.category20();
-
-      var force = d3.layout.force()
-        .charge(-120)
-        .linkDistance(30)
-        .size([width, height]);
+      var maxLikes = _.max(links, 'value').value;
+      var minLikes = _.min(links, 'value').value;
 
       var svg = d3.select("#graph")
         .attr("width", width)
         .attr("height", height);
 
-      force
+      var force = d3.layout.force()
+        .charge(-120)
+        .size([width, height])
         .nodes(nodes)
         .links(links)
+        .linkDistance(function(link, i){
+          return 200 * Math.pow(link.value, -0.5);
+        })
+        .linkStrength(function(link, i){
+          return link.value / maxLikes;
+        })
         .start();
 
       var link = svg.selectAll(".link")
@@ -196,21 +200,23 @@
 
       var node = svg.selectAll(".node")
         .data(nodes)
-        .enter().append("svg:circle")
+        .enter().append("g")
         .attr("class", "node")
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout)
+        .call(force.drag);
+
+      node.append("circle")
         .attr("r", 5)
         .style("fill", function (d) {
           return color(d.group);
-        })
-        .on("click", click)
-        .on("dblclick", dblclick)
-        .call(force.drag);
-       
-
-      node.append("title")
-        .text(function (d) {
-          return d.name;
         });
+
+      node.append("text")
+        .attr("x", 12)
+        .attr("dy", ".35em")
+        .style("font-size", 10)
+        .text(function(d) { return d.name; });
 
       force.on("tick", function () {
         link.attr("x1", function (d) {
@@ -226,30 +232,37 @@
             return d.target.y;
           });
 
-        node.attr("cx", function (d) {
-          return d.x;
-        })
-          .attr("cy", function (d) {
-            return d.y;
-          });
+       node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
       });
 
-      // action to take on mouse click
-      function click() {
-        d3.select(this).transition()
+      // action to take on mouseover
+      function mouseover() {
+        /* jshint validthis: true */
+        d3.select(this).select("circle").transition()
           .duration(750)
           .attr("r", 20)
-          .style("fill", "black");
+          .style("fill", "red");
+
+        d3.select(this).select("text").transition()
+          .duration(750)
+          .style("font-size", 30)
+          .style("fill", "red");
       }
 
-      // action to take on mouse double click
-      function dblclick() {
-        d3.select(this).transition()
+      // action to take on mouseout
+      function mouseout() {
+        /* jshint validthis: true */
+        d3.select(this).select("circle").transition()
           .duration(750)
           .attr("r", 5)
           .style("fill", function (d) {
             return color(d.group);
           });
+
+        d3.select(this).select("text").transition()
+          .duration(750)
+          .style("font-size", 10)
+          .style("fill", "black");
       }
 
       $scope.graphLoaded = true;

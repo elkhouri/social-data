@@ -5,14 +5,10 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 app.set('port', process.env.PORT || 3000);
-
-
-
 app.use(cookieParser());
 app.use(session({
   secret: 'VkJAYDl3gNDaKp73H7pC'
 }));
-
 
 var auth = require('./auth');
 var fb = require('./routes/fb');

@@ -235,6 +235,7 @@
 
       // action to take on mouse click
       function click() {
+        /* jshint validthis: true */
         d3.select(this).transition()
           .duration(750)
           .attr("r", 20)
@@ -243,6 +244,7 @@
 
       // action to take on mouse double click
       function dblclick() {
+        /* jshint validthis: true */
         d3.select(this).transition()
           .duration(750)
           .attr("r", 5)

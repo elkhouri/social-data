@@ -21,7 +21,7 @@
   <div class="main">
     <tabset>
       <tab heading="Profile" ng-if="loggedIn('facebook')">
-        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
+        <div ng-show="!statsLoaded" class="loader">Loading Stats...</div>
         <dl ng-show="statsLoaded" class="dl-horizontal">
           <dt>Name</dt>
           <dd>{{ fb.name }}</dd>
@@ -43,7 +43,7 @@
       </tab>
 
       <tab heading="Friends" ng-if="loggedIn('facebook')">
-        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
+        <div ng-show="!statsLoaded" class="loader">Loading Stats...</div>
         <div ng-show="statsLoaded">
           <div class="row">
             <strong class="col-sm-3">Number of Friends</strong>
@@ -69,7 +69,7 @@
       </tab>
 
       <tab heading="Statuses" ng-if="loggedIn('facebook')">
-        <h4 ng-show="!statsLoaded">Loading Stats...</h4>
+        <div ng-show="!statsLoaded" class="loader">Loading Stats...</div>
         <div ng-show="statsLoaded">
           <div class="row">
             <strong class="col-sm-3">Average Status Length in characters</strong>
@@ -91,7 +91,7 @@
       </tab>
 
       <tab heading="Twitter" ng-if="loggedIn('twitter')">
-        <h4 ng-show="!twitterLoaded">Loading Tweets...</h4>
+        <div ng-show="!twitterLoaded" class="loader">Loading Tweets...</div>
         <div ng-show="twitterLoaded">
           <div class="panel panel-default">
             <div class="panel-heading">Here are your 20 latest tweets</div>
@@ -118,7 +118,7 @@
       </tab>
 
       <tab heading="Graph">
-        <h4 ng-show="!graphLoaded">Loading Graph...</h4>
+        <div ng-show="!graphLoaded" class="loader">Loading Graph...</div>
         <svg id="graph"></svg>
       </tab>
     </tabset>

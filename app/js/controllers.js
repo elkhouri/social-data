@@ -120,8 +120,8 @@
         }
       });
 
-      console.log(nodes);
-      console.log(links);
+//      console.log(nodes);
+//      console.log(links);
       doGraph(nodes, links);
     }
 

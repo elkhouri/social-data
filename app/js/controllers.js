@@ -107,7 +107,7 @@
             });
 
             if (sourceIndex > -1) {
-              links[sourceIndex].value += 10;
+              links[sourceIndex].value += 5;
             } else {
               links.push({
                 source: friendIndex,

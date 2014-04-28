@@ -23,15 +23,15 @@ Design Principles
   - All the data are organized into tabs.
   
 - Affordance
-  - Navigating through tabs affords easy access of different types of data
-  - The graph enables interaction (dragging, hovering)
+  - Navigating through tabs affords easy access of different types of data.
+  - The graph enables interaction (dragging, hovering).
   
 - Mental/conceptual Models
-  - Previous knowledge of how tabs work; clicking one allows a new page of content to appear
-  - Need to have an understanding of how data is mapped on a graph in order to interact with it
-  - Knowledge of tables and how variables and values map to one another (Avg Statuses a Day ; 0.03)
+  - Previous knowledge of how tabs work; clicking one allows a new page of content to appear.
+  - Need to have an understanding of how data is mapped on a graph in order to interact with it.
+  - Knowledge of tables and how variables and values map to one another (Avg Statuses a Day ; 0.03).
   
-  
+
   
 Social Network Analysis Parameters
   --------------

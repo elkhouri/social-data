@@ -21,67 +21,104 @@
 <a ng-href="/auth/twitter" id="twitbut" ng-if="!loggedIn('twitter')" class="btn btn-primary">Login to Twitter</a>
 
 <div class="main" ng-if="loggedIn('twitter') || loggedIn('facebook')">
-  <tabset>
-    <tab heading="Profile" ng-if="loggedIn('facebook')">
+  <tabset class="tabset">
+    <tab heading="Profile" ng-if="loggedIn('facebook')" id="tabheading">
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
-      <dl ng-show="statsLoaded" class="dl-horizontal">
-        <dt>
-          <br>Name</dt>
-        <dd>
-          <br>{{ fb.name }}</dd>
-        <dt>Username</dt>
-        <dd>{{ fb.username }}</dd>
-        <dt>Birthday</dt>
-        <dd>{{ fb.birthday }}</dd>
-        <dt>Gender</dt>
-        <dd>{{ fb.gender }}</dd>
-        <dt>Education</dt>
-        <dd ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}</dd>
-        <dt>Languages</dt>
-        <dd ng-repeat="l in fb.languages">{{ l.name }}</dd>
-        <dt>Location</dt>
-        <dd>{{ fb.location.name }}</dd>
-      </dl>
+      <table ng-show="statsLoaded" class="table table-bordered">
+        <tr>
+            <td>Name</td>
+            <td>{{ fb.name }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>{{ fb.username }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Birthday</td>
+            <td>{{ fb.birthday }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>{{ fb.gender }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Education</td>
+            <td ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}</td>
+        </tr>
+        <tr>
+            <td>Languages</td>
+            <td ng-repeat="l in fb.languages">{{ l.name }}</td>
+            
+        </tr>
+        <tr>
+            <td>Location</td>
+            <td>{{ fb.location.name }}</td>
+            <td></td>
+        </tr>
+      </table>
     </tab>
 
-    <tab heading="Friends" ng-if="loggedIn('facebook')">
+    <tab heading="Friends" ng-if="loggedIn('facebook')" id="tabheading">
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
-      <dl ng-show="statsLoaded" class="dl-horizontal">
-        <h4>
-          <br>See the number of friends you have things in common with below</h4>
-        <dt>Number of Friends</dt>
-        <dd ng-bind="numFriends"></dd>
-        <dt>Same Birthday Month</dt>
-        <dd ng-bind="sameBDay"></dd>
-        <dt>Same Gender</dt>
-        <dd ng-bind="sameGender"></dd>
-        <dt>Same School(s)</dt>
-        <dd ng-bind="sameSchool"></dd>
-        <dt>Same Location</dt>
-        <dd ng-bind="sameLocation"></dd>
-      </dl>
+      <table ng-show="statsLoaded" class="table table-bordered">
+        <tr>
+            <td id="var">Things in Common</td>
+            <td id="val">Number of Friends</td>
+        </tr>
+        <tr>
+            <td>Total Friends</td>
+            <td ng-bind="numFriends"></td>
+        </tr>
+        <tr>
+            <td>Same Birthday Month</td>
+            <td ng-bind="sameBDay"></td>
+        </tr>
+        <tr>
+            <td>Same Gender</td>
+            <td ng-bind="sameGender"></td>
+        </tr>
+        <tr>
+            <td>Same School(s)</td>
+            <td ng-bind="sameSchool"></td>
+        </tr>
+        <tr>
+            <td>Same Location</td>
+            <td ng-bind="sameLocation"></td>
+        </tr>
+      </table>
     </tab>
 
-    <tab heading="Statuses" ng-if="loggedIn('facebook')">
+    <tab heading="Statuses" ng-if="loggedIn('facebook')" id="tabheading">
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
-      <dl ng-show="statsLoaded" class="dl-horizontal">
-        <h4>
-          <br>See some
-          <strong>
-            <em>averages</em>
-          </strong>of the statuses you post below</h4>
-        <dt>Status Length (chars)</dt>
-        <dd ng-bind="avgLen | number:2"></dd>
-        <dt>Status Length (words)</dt>
-        <dd ng-bind="avgWordLen | number:2"></dd>
-        <dt>Hours Between Posts</dt>
-        <dd ng-bind="avgDelay | number:2"></dd>
-        <dt>Posts Per Day</dt>
-        <dd ng-bind="avgPerDay | number:2"></dd>
-      </dl>
+      <table ng-show="statsLoaded" class="table table-bordered">
+        <tr>
+            <td id="var">Status Statistic</td>
+            <td id="val">Average Number</td>
+        </tr>
+        <tr>
+            <td>Status Length (chars)</td>
+            <td ng-bind="avgLen | number:2"></td>
+        </tr>
+        <tr>
+            <td>Status Length (words)</td>
+            <td ng-bind="avgWordLen | number:2"></td>
+        </tr>
+        <tr>
+            <td>Hours Between Posts</td>
+            <td ng-bind="avgDelay | number:2"></td>
+        </tr>
+        <tr>
+            <td>Posts Per Day</td>
+            <td ng-bind="avgPerDay | number:2"></td>
+        </tr>
+      </table>
     </tab>
 
-    <tab heading="Twitter" ng-if="loggedIn('twitter')">
+    <tab heading="Twitter" ng-if="loggedIn('twitter')" id="tabheading">
       <h4 ng-show="!twitterLoaded" class="loader"><br>Loading Tweets...</h4>
       <div ng-show="twitterLoaded">
         <div class="panel panel-default">
@@ -107,7 +144,7 @@
       </div>
     </tab>
 
-    <tab heading="Explore Graph">
+    <tab heading="Explore Graph" id="tabheading">
       <div ng-show="!graphLoaded" class="loader"><br>Loading Graph...</div>
       <h4>
         <br>The graph below displays your "likers" on some of the most recent posts you've made.

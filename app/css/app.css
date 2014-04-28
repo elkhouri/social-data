@@ -20,8 +20,8 @@
 }
 
 .node circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
+    stroke: #fff;
+    stroke-width: 1.5px;
 }
 .link {
     stroke: #999;
@@ -35,7 +35,7 @@ body {
     background-color: #ccc;
 }
 #siteBody {
-    height: 800px;
+    height: 960px;
     width: 960px;
     margin: 0 auto;
     background-color: #eee;
@@ -130,3 +130,8 @@ h4 {
     opacity: 0;
   }
 }
+
+a.hover {
+    text-decoration:none;
+}
+    

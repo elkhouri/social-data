@@ -35,7 +35,7 @@ body {
     background-color: #ccc;
 }
 #siteBody {
-    height: 960px;
+    height: 1000px;
     width: 960px;
     margin: 0 auto;
     background-color: #eee;
@@ -131,7 +131,8 @@ h4 {
   }
 }
 
-a.hover {
-    text-decoration:none;
+#graph {
+    height:695px;
+    width:1080px; 
 }
-    
+

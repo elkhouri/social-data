@@ -1,11 +1,11 @@
 <div class="alert alert-danger" ng-if="error.text" ng-bind="error.text"></div>
 
-<h2 id="title" ng-if="!loggedIn('twitter') && !loggedIn('facebook')"> tabkeeper </h2>
+<h2 id="title" ng-if="!loggedIn('twitter') && !loggedIn('facebook')"> Tabkeeper </h2>
 <div class="img">
   <img ng-if="!loggedIn('twitter') && !loggedIn('facebook')" src="../css/icons.png">
 </div>
 <h2 id="index" ng-if="!loggedIn('twitter') && !loggedIn('facebook')">
-  Please Login to Facebook or Twitter</h2>
+  Please Login to Facebook or Twitter.</h2>
 <h2 id="indextwit" ng-if="!loggedIn('twitter') && loggedIn('facebook')">
   Login to Twitter to access your information!
 </h2>
@@ -13,8 +13,8 @@
   Login to Facebook to access your information!
 </h2>
 <h2 id="inboth" ng-if="loggedIn('twitter') && loggedIn('facebook')">
-  Hello,
-  <strong>{{ fb.first_name }}</strong>! Explore the tabs to learn about yourself and your friends
+  Hello, <strong>{{ fb.first_name }}</strong>! 
+  Explore the tabs to learn about yourself and your friends.
 </h2>
 
 <a ng-href="/auth/facebook" id="fbbut" ng-if="!loggedIn('facebook')" class="btn btn-primary">Login to Facebook</a>
@@ -26,38 +26,32 @@
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
       <table ng-show="statsLoaded" class="table table-bordered">
         <tr>
-            <td>Name</td>
-            <td>{{ fb.name }}</td>
-            <td></td>
+            <th>Name</th>
+            <th>{{ fb.name }}</th>
         </tr>
         <tr>
             <td>Username</td>
             <td>{{ fb.username }}</td>
-            <td></td>
         </tr>
         <tr>
             <td>Birthday</td>
             <td>{{ fb.birthday }}</td>
-            <td></td>
         </tr>
         <tr>
             <td>Gender</td>
             <td>{{ fb.gender }}</td>
-            <td></td>
         </tr>
         <tr>
             <td>Education</td>
-            <td ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}</td>
+            <td><span ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}<br></span></td>
         </tr>
         <tr>
             <td>Languages</td>
-            <td ng-repeat="l in fb.languages">{{ l.name }}</td>
-            
+            <td><span ng-repeat="l in fb.languages">{{ l.name }}<br></span></td>
         </tr>
         <tr>
             <td>Location</td>
             <td>{{ fb.location.name }}</td>
-            <td></td>
         </tr>
       </table>
     </tab>
@@ -66,8 +60,8 @@
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
       <table ng-show="statsLoaded" class="table table-bordered">
         <tr>
-            <td id="var">Things in Common</td>
-            <td id="val">Number of Friends</td>
+            <th id="var">Things in Common</th>
+            <th id="val">Number of Friends</th>
         </tr>
         <tr>
             <td>Total Friends</td>
@@ -96,8 +90,8 @@
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
       <table ng-show="statsLoaded" class="table table-bordered">
         <tr>
-            <td id="var">Status Statistic</td>
-            <td id="val">Average Number</td>
+            <th id="var">Status Statistic</th>
+            <th id="val">Average Number</th>
         </tr>
         <tr>
             <td>Status Length (chars)</td>

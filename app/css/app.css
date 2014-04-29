@@ -1,9 +1,9 @@
-#var {
+.var {
     background-color: #669999;
     font-weight: bold;
     color: #eee;
 }
-#val {
+.val {
     background-color: #669999;
     font-weight: bold;
     color: #eee;
@@ -17,7 +17,7 @@
     border: #669999 solid 1px;
     width: 150px;
 }
-#tabheading {
+.tabheading {
     font-family: arial;
     text-transform: uppercase;
     font-weight: bold;
@@ -25,6 +25,9 @@
     color: #555;
     margin-left: -10px;
 }
+.nav,
+.pagination,
+.carousel,
 .panel-title a {
     cursor: pointer;
 }

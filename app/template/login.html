@@ -1,11 +1,12 @@
 <div class="alert alert-danger" ng-if="error.text" ng-bind="error.text"></div>
 
-<h2 id="title" ng-if="!loggedIn('twitter') && !loggedIn('facebook')"> Tabkeeper </h2>
+<h2 id="title" ng-if="!loggedIn('twitter') && !loggedIn('facebook')">Tabkeeper</h2>
 <div class="img">
   <img ng-if="!loggedIn('twitter') && !loggedIn('facebook')" src="../css/icons.png">
 </div>
 <h2 id="index" ng-if="!loggedIn('twitter') && !loggedIn('facebook')">
-  Please Login to Facebook or Twitter.</h2>
+  Please Login to Facebook or Twitter.
+</h2>
 <h2 id="indextwit" ng-if="!loggedIn('twitter') && loggedIn('facebook')">
   Login to Twitter to access your information!
 </h2>
@@ -13,7 +14,7 @@
   Login to Facebook to access your information!
 </h2>
 <h2 id="inboth" ng-if="loggedIn('twitter') && loggedIn('facebook')">
-  Hello, <strong>{{ fb.first_name }}</strong>! 
+  Hello, <strong>{{ fb.first_name }}</strong>!
   Explore the tabs to learn about yourself and your friends.
 </h2>
 
@@ -22,7 +23,7 @@
 
 <div class="main" ng-if="loggedIn('twitter') || loggedIn('facebook')">
   <tabset class="tabset">
-    <tab heading="Profile" ng-if="loggedIn('facebook')" id="tabheading">
+    <tab heading="Profile" ng-if="loggedIn('facebook')" class="tabheading">
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
       <table ng-show="statsLoaded" class="table table-bordered">
         <tr>
@@ -43,11 +44,15 @@
         </tr>
         <tr>
             <td>Education</td>
-            <td><span ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}<br></span></td>
+            <td>
+              <span ng-repeat="e in fb.education">{{ e.school.name }} {{ e.year.name }}<br></span>
+            </td>
         </tr>
         <tr>
             <td>Languages</td>
-            <td><span ng-repeat="l in fb.languages">{{ l.name }}<br></span></td>
+            <td>
+              <span ng-repeat="l in fb.languages">{{ l.name }}<br></span>
+            </td>
         </tr>
         <tr>
             <td>Location</td>
@@ -56,12 +61,12 @@
       </table>
     </tab>
 
-    <tab heading="Friends" ng-if="loggedIn('facebook')" id="tabheading">
+    <tab heading="Friends" ng-if="loggedIn('facebook')" class="tabheading">
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
       <table ng-show="statsLoaded" class="table table-bordered">
         <tr>
-            <th id="var">Things in Common</th>
-            <th id="val">Number of Friends</th>
+            <th class="var">Things in Common</th>
+            <th class="val">Number of Friends</th>
         </tr>
         <tr>
             <td>Total Friends</td>
@@ -86,12 +91,12 @@
       </table>
     </tab>
 
-    <tab heading="Statuses" ng-if="loggedIn('facebook')" id="tabheading">
+    <tab heading="Statuses" ng-if="loggedIn('facebook')" class="tabheading">
       <h4 ng-show="!statsLoaded"><br>Loading Stats...</h4>
       <table ng-show="statsLoaded" class="table table-bordered">
         <tr>
-            <th id="var">Status Statistic</th>
-            <th id="val">Average Number</th>
+            <th class="var">Status Statistic</th>
+            <th class="val">Average Number</th>
         </tr>
         <tr>
             <td>Status Length (chars)</td>
@@ -112,7 +117,7 @@
       </table>
     </tab>
 
-    <tab heading="Twitter" ng-if="loggedIn('twitter')" id="tabheading">
+    <tab heading="Twitter" ng-if="loggedIn('twitter')" class="tabheading">
       <h4 ng-show="!twitterLoaded" class="loader"><br>Loading Tweets...</h4>
       <div ng-show="twitterLoaded">
         <div class="panel panel-default">
@@ -138,12 +143,12 @@
       </div>
     </tab>
 
-    <tab heading="Explore Graph" id="tabheading">
+    <tab heading="Explore Graph" class="tabheading">
       <div ng-show="!graphLoaded" class="loader"><br>Loading Graph...</div>
       <h4>
         <br>The graph below displays your "likers" on some of the most recent posts you've made.
         <br>Hover over or drag a circle to interact.</h4>
-        
+
         <h4>Circles that are closer to the center node (you!) represent people with a higher number of likes for your statuses</h4>
       <svg id="graph"></svg>
     </tab>
